@@ -1,14 +1,16 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { CategoryEntity } from 'src/categories/entities/category.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @ObjectType()
-@Entity('users')
+@Entity('user')
 export class UserEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
@@ -23,10 +25,13 @@ export class UserEntity {
   updatedAt: Date;
 
   @Field()
-  @Column()
+  @Column({ type: 'varchar', length: 36 })
   email: string;
 
   @Field()
-  @Column({ nullable: true })
-  name: string;
+  @Column({ type: 'varchar', length: 200 })
+  password: string;
+
+  @OneToMany(() => CategoryEntity, (category) => category.user)
+  categories: CategoryEntity[];
 }
