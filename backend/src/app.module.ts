@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import { CategoriesModule } from './categories/categories.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { CategoryModule } from './category/category.module';
 import { TasksModule } from './tasks/tasks.module';
 
 @Module({
@@ -15,6 +16,7 @@ import { TasksModule } from './tasks/tasks.module';
       autoSchemaFile: 'schema.gql',
       sortSchema: true,
       playground: true,
+      context: ({ req }) => ({ req }),
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -32,8 +34,9 @@ import { TasksModule } from './tasks/tasks.module';
         logging: true,
       }),
     }),
+    AuthModule,
     UsersModule,
-    CategoriesModule,
+    CategoryModule,
     TasksModule,
   ],
   providers: [],

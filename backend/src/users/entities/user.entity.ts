@@ -1,37 +1,38 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { CategoryEntity } from 'src/categories/entities/category.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { CategoryEntity } from 'src/category/entities/category.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@ObjectType()
-@Entity('user')
+export enum UserRoles {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
+registerEnumType(UserRoles, {
+  name: 'userRoles',
+});
+
+@ObjectType({ description: 'The Users object' })
+@Entity({ name: 'Users' })
 export class UserEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
-  @CreateDateColumn()
-  createdAt: Date;
+  @Field((type) => UserRoles, { nullable: true, defaultValue: UserRoles.USER })
+  @Column({ type: 'enum', enum: UserRoles, default: UserRoles.USER })
+  role?: UserRoles;
 
   @Field()
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @Field()
-  @Column({ type: 'varchar', length: 36 })
+  @Column({ type: 'varchar', unique: true })
   email: string;
 
   @Field()
-  @Column({ type: 'varchar', length: 200 })
+  @Column('varchar')
   password: string;
 
-  @OneToMany(() => CategoryEntity, (category) => category.user)
+  @Field(() => CategoryEntity)
+  @OneToMany(() => CategoryEntity, (category) => category.user, {
+    onDelete: 'CASCADE',
+  })
   categories: CategoryEntity[];
 }

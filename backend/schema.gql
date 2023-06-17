@@ -2,9 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateUserInput {
-  email: String!
-  name: String
+"""The Categories object"""
+type CategoryEntity {
+  dateCreated: DateTime!
+  id: ID!
+  name: String!
+  tasks: TaskEntity!
+  user: UserEntity!
+}
+
+"""The Categories input type"""
+input CreateCategoryInput {
+  """The name of the category"""
+  name: String!
+}
+
+input CreateTaskInput {
+  dateEnd: String!
+  dateStart: String!
+  name: String!
 }
 
 """
@@ -12,27 +28,78 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type LoginResponse {
+  token: String!
+  user: UserEntity!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
-  createUser(createUser: CreateUserInput!): UserEntity!
-  removeUser(id: Float!): Float!
-  updateUser(updateUser: UpdateUserInput!): UserEntity!
+  addCategory(createCategory: CreateCategoryInput!): CategoryEntity!
+  createTask(createTask: CreateTaskInput!): TaskEntity!
+  deleteCategory(id: Float!): Float!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+  register(registerUserInput: RegisterUserInput!): RegisterResponse!
+  removeTask(id: Float!): Float!
+  updateCategory(id: Float!, updateCategory: UpdateCategoryInput!): CategoryEntity!
+  updateTask(updateTask: UpdateTaskInput!): TaskEntity!
 }
 
 type Query {
-  getAllUser: [UserEntity!]!
-  getOneUser(id: Float!): UserEntity!
+  allCategories(userId: Float!): [CategoryEntity!]!
+  categoryById(id: Float!): CategoryEntity!
+  getAllTasks: [TaskEntity!]!
+  getOneTask(id: Float!): TaskEntity!
+  profile: UserEntity!
 }
 
-input UpdateUserInput {
-  email: String
+type RegisterResponse {
+  token: String!
+  user: UserEntity!
+}
+
+input RegisterUserInput {
+  email: String!
+  password: String!
+  role: String
+}
+
+"""The Tasks object"""
+type TaskEntity {
+  category: CategoryEntity!
+  dateEnd: DateTime!
+  dateStart: DateTime!
   id: ID!
+  name: String!
+}
+
+"""The Categories input type"""
+input UpdateCategoryInput {
+  """The name of the category"""
   name: String
 }
 
-type UserEntity {
-  createdAt: DateTime!
-  email: String!
+input UpdateTaskInput {
+  dateEnd: String!
+  dateStart: String!
   id: ID!
   name: String!
-  updatedAt: DateTime!
+}
+
+"""The Users object"""
+type UserEntity {
+  categories: CategoryEntity!
+  email: String!
+  id: ID!
+  password: String!
+  role: userRoles
+}
+
+enum userRoles {
+  ADMIN
+  USER
 }

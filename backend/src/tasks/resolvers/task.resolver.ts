@@ -5,17 +5,17 @@ import { CreateTaskInput } from '../inputs/create-task.input';
 import { UpdateTaskInput } from '../inputs/update-task.input';
 
 @Resolver('Task')
-export class ResolversResolver {
+export class TaskResolver {
   constructor(private readonly taskSevice: TaskService) {}
   @Mutation(() => TaskEntity)
   async createTask(
-    @Args('createUser') createTaskInput: CreateTaskInput,
+    @Args('createTask') createTaskInput: CreateTaskInput,
   ): Promise<TaskEntity> {
     return await this.taskSevice.createTask(createTaskInput);
   }
   @Mutation(() => TaskEntity)
   async updateTask(
-    @Args('updateUser') updateUserInput: UpdateTaskInput,
+    @Args('updateTask') updateUserInput: UpdateTaskInput,
   ): Promise<TaskEntity> {
     return await this.taskSevice.updateTask(updateUserInput);
   }

@@ -11,8 +11,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@ObjectType()
-@Entity('category')
+@ObjectType({ description: 'The Categories object' })
+@Entity({ name: 'Categories' })
 export class CategoryEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
@@ -23,13 +23,15 @@ export class CategoryEntity {
   dateCreated: Date;
 
   @Field()
-  @Column({ type: 'varchar', length: 200 })
+  @Column('varchar', { length: 200 })
   name: string;
 
-  @ManyToOne(() => UserEntity)
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity, (user) => user.categories)
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
-  @OneToMany(() => TaskEntity, (task) => task.category)
+  @Field(() => TaskEntity)
+  @OneToMany(() => TaskEntity, (task) => task.category, { onDelete: 'CASCADE' })
   tasks: TaskEntity[];
 }
