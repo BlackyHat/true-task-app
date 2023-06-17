@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { CategoryEntity } from 'src/category/entities/category.entity';
+import { TaskEntity } from 'src/tasks/entities/task.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum UserRoles {
@@ -15,8 +16,8 @@ registerEnumType(UserRoles, {
 @Entity({ name: 'Users' })
 export class UserEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Field((type) => UserRoles, { nullable: true, defaultValue: UserRoles.USER })
   @Column({ type: 'enum', enum: UserRoles, default: UserRoles.USER })
@@ -30,9 +31,13 @@ export class UserEntity {
   @Column('varchar')
   password: string;
 
-  @Field(() => CategoryEntity)
+  @Field((type) => CategoryEntity)
   @OneToMany(() => CategoryEntity, (category) => category.user, {
     onDelete: 'CASCADE',
   })
   categories: CategoryEntity[];
+
+  @Field((type) => TaskEntity)
+  @OneToMany(() => TaskEntity, (task) => task.user, { onDelete: 'CASCADE' })
+  tasks: TaskEntity[];
 }

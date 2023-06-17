@@ -7,9 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { CategoryEntity } from '../entities/category.entity';
-import { CreateCategoryDto } from '../dto/create-category.dto';
-import { UpdateCategoryDto } from '../dto/update-category.dto';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { CreateCategoryInput } from '../dto/create-category.input';
+import { UpdateCategoryInput } from '../dto/update-category.input';
 
 @Injectable()
 export class CategoryService {
@@ -19,37 +18,35 @@ export class CategoryService {
   ) {}
 
   async createCategory(
-    createCategoryDto: CreateCategoryDto,
-    user: UserEntity,
+    createCategoryInput: CreateCategoryInput,
+    id: number,
   ): Promise<CategoryEntity> {
-    console.log('🚀 ~ CategoryService ~ user:', user);
-    const category = await this.categoryRepository.findOne({
-      where: {
-        user: { id: user.id },
-        name: createCategoryDto.name,
-      },
-    });
-    console.log('🚀 ~ CategoryService ~ category:', category);
+    await this.findyUniqueName(id, createCategoryInput.name);
 
-    if (category) {
-      throw new BadRequestException('This category already exist!');
-    }
+    const newCategory = {
+      name: createCategoryInput.name,
+      user: { id },
+    };
 
-    return await this.categoryRepository.save(createCategoryDto);
+    return await this.categoryRepository.save(newCategory);
   }
 
   async getAllCategories(id: number): Promise<CategoryEntity[]> {
     return await this.categoryRepository.find({
-      relations: {
-        tasks: true,
+      where: {
+        user: { id },
       },
+      relations: { tasks: true },
     });
   }
 
-  async getOneCategory(id: number): Promise<CategoryEntity> {
+  async getOneCategory(
+    userId: number,
+    categoryId: number,
+  ): Promise<CategoryEntity> {
     const category = await this.categoryRepository.findOne({
-      where: { id },
-      relations: { tasks: true },
+      where: { user: { id: userId }, id: categoryId },
+      relations: { user: true, tasks: true },
     });
     if (!category) {
       throw new NotFoundException('Category not found');
@@ -58,29 +55,41 @@ export class CategoryService {
   }
 
   async updateCategory(
-    id: number,
-    updateCategoryDto: UpdateCategoryDto,
+    userId: number,
+    updateCategoryInput: UpdateCategoryInput,
   ): Promise<CategoryEntity> {
-    const category = await this.categoryRepository.findOne({
-      where: { id },
-    });
+    const category = await this.getOneCategory(userId, updateCategoryInput.id);
+
     if (!category) {
       throw new NotFoundException('Category not found');
     }
+    await this.findyUniqueName(userId, updateCategoryInput.name);
 
-    await this.categoryRepository.update(id, updateCategoryDto);
-    return await this.getOneCategory(id);
+    return await this.categoryRepository.save({
+      ...category,
+      ...updateCategoryInput,
+    });
   }
 
-  async removeCategory(id: number): Promise<string> {
-    const category = await this.categoryRepository.findOne({
-      where: { id },
-    });
+  async removeCategory(userId: number, categoryId: number) {
+    const category = await this.getOneCategory(userId, categoryId);
     if (!category) {
       throw new NotFoundException('Category not found');
     }
 
-    await this.categoryRepository.delete(id);
-    return `Category with id:${id} has been deleted successful`;
+    await this.categoryRepository.remove(category);
+    return `Category with id:${categoryId} has been deleted successful`;
+  }
+
+  async findyUniqueName(id: number, name: string): Promise<CategoryEntity[]> {
+    const category = await this.categoryRepository.findBy({
+      user: { id },
+      name,
+    });
+
+    if (category.length) {
+      throw new BadRequestException('This category already exist!');
+    }
+    return category;
   }
 }

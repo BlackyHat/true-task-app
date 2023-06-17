@@ -1,10 +1,10 @@
 import { Resolver, Mutation, Args, Query, Context } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CategoryService } from '../services/category.service';
 import { CategoryEntity } from '../entities/category.entity';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { CreateCategoryInput } from '../inputs/create-category.inputs';
-import { UpdateCategoryInput } from '../inputs/update-category.inputs';
+import { CreateCategoryInput } from '../dto/create-category.input';
+import { UpdateCategoryInput } from '../dto/update-category.input';
 
 @Resolver('Categories')
 export class CategoryResolver {
@@ -16,32 +16,51 @@ export class CategoryResolver {
     @Args('createCategory') createCategory: CreateCategoryInput,
     @Context() context,
   ): Promise<CategoryEntity> {
-    return this.categorySevice.createCategory(createCategory, context.req.user);
+    return this.categorySevice.createCategory(
+      createCategory,
+      +context.req.user.id,
+    );
   }
+
   @Query(() => [CategoryEntity], { name: 'allCategories' })
   @UseGuards(JwtAuthGuard)
-  async getAllCategory(
-    @Args('userId') userId: number,
-  ): Promise<CategoryEntity[]> {
-    return await this.categorySevice.getAllCategories(userId);
+  async getAllCategory(@Context() context): Promise<CategoryEntity[]> {
+    return await this.categorySevice.getAllCategories(+context.req.user.id);
   }
+
   @Query(() => CategoryEntity, { name: 'categoryById' })
-  async getOneCategory(@Args('id') id: number): Promise<CategoryEntity> {
-    return await this.categorySevice.getOneCategory(id);
+  @UseGuards(JwtAuthGuard)
+  async getOneCategory(
+    @Args('categoryId') categoryId: number,
+    @Context() context,
+  ): Promise<CategoryEntity> {
+    return await this.categorySevice.getOneCategory(
+      +context.req.user.id,
+      categoryId,
+    );
   }
 
   @Mutation(() => CategoryEntity, { name: 'updateCategory' })
   @UseGuards(JwtAuthGuard)
   async updateCategory(
     @Args('updateCategory') updateCategory: UpdateCategoryInput,
-    @Args('id') id: number,
+    @Context() context,
   ): Promise<CategoryEntity> {
-    return await this.categorySevice.updateCategory(id, updateCategory);
+    return await this.categorySevice.updateCategory(
+      +context.req.user.id,
+      updateCategory,
+    );
   }
 
   @Mutation(() => Number, { name: 'deleteCategory' })
   @UseGuards(JwtAuthGuard)
-  async removeCategory(@Args('id') id: number): Promise<string> {
-    return await this.categorySevice.removeCategory(id);
+  async removeCategory(
+    @Args('categoryId') categoryId: number,
+    @Context() context,
+  ): Promise<String> {
+    return await this.categorySevice.removeCategory(
+      +context.req.user.id,
+      categoryId,
+    );
   }
 }

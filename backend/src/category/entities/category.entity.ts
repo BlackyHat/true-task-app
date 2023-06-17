@@ -31,7 +31,7 @@ export class CategoryEntity {
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
-  @Field(() => TaskEntity)
+  @Field(() => TaskEntity,{nullable:true})
   @OneToMany(() => TaskEntity, (task) => task.category, { onDelete: 'CASCADE' })
   tasks: TaskEntity[];
 }

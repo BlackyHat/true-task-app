@@ -17,11 +17,11 @@ export class TaskEntity {
   id: number;
 
   @Field()
-  @Column()
+  @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
   dateStart: Date;
 
   @Field()
-  @Column()
+  @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
   dateEnd: Date;
 
   @Field()
@@ -32,4 +32,9 @@ export class TaskEntity {
   @ManyToOne(() => CategoryEntity, (category) => category.tasks)
   @JoinColumn({ name: 'categoryId' })
   category: CategoryEntity;
+
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity, (user) => user.tasks)
+  @JoinColumn({ name: 'userId' })
+  user: UserEntity;
 }
