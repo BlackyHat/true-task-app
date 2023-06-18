@@ -12,59 +12,45 @@ export class TaskService {
     private readonly taskRepository: Repository<TaskEntity>,
   ) {}
 
-  async createTask(
-    createTaskInput: CreateTaskInput,
-    id: number,
-  ): Promise<TaskEntity> {
+  async createTask(createTaskInput: CreateTaskInput): Promise<TaskEntity> {
     const { categoryId, ...taskData } = createTaskInput;
 
     const newTask = {
       ...taskData,
-      user: { id },
       category: { id: categoryId },
     };
     return await this.taskRepository.save(newTask);
   }
 
-  async getOneTask(
-    userId: number,
-    categoryId: number,
-    taskId: number,
-  ): Promise<TaskEntity> {
+  async getOneTask(id: number, taskId: number): Promise<TaskEntity> {
     return await this.taskRepository.findOne({
-      where: { user: { id: userId }, category: { id: categoryId }, id: taskId },
-      relations: { user: true, category: true },
+      where: { category: { id }, id: taskId },
+      relations: { category: true },
     });
   }
 
-  async getAllTasks(userId: number, categoryId: number): Promise<TaskEntity[]> {
+  async getAllTasks(id: number): Promise<TaskEntity[]> {
     return await this.taskRepository.find({
-      where: { user: { id: userId }, category: { id: categoryId } },
-      relations: { user: true, category: true },
+      where: { category: { id } },
+      relations: { category: true },
+      order: { dateStart: 'ASC' },
     });
   }
 
-  async updateTask(
-    userId: number,
-    categoryId: number,
-    updateTaskInput: UpdateTaskInput,
-  ): Promise<TaskEntity> {
-    const task = await this.getOneTask(userId, categoryId, updateTaskInput.id);
+  async updateTask(updateTaskInput: UpdateTaskInput): Promise<TaskEntity> {
+    const { categoryId, id, ...updateTask } = updateTaskInput;
+    const task = await this.getOneTask(categoryId, id);
     if (!task) {
       throw new NotFoundException('Task not found');
     }
     return await this.taskRepository.save({
       ...task,
-      ...updateTaskInput,
+      ...updateTask,
     });
   }
 
-  async removeTask(
-    userId: number,
-    categoryId: number,
-    taskId: number,
-  ): Promise<string> {
-    const task = await this.getOneTask(userId, categoryId, taskId);
+  async removeTask(categoryId: number, taskId: number): Promise<string> {
+    const task = await this.getOneTask(categoryId, taskId);
     if (!task) {
       throw new NotFoundException('Task not found');
     }
@@ -72,3 +58,21 @@ export class TaskService {
     return `Category with id:${taskId} has been deleted successful`;
   }
 }
+
+/**
+ *   async getAllTasksWithPagination(
+    userId: number,
+    categoryId: number,
+    page: number,
+    limit: number,
+  ): Promise<TaskEntity[]> {
+    return await this.taskRepository.find({
+      where: { user: { id: userId }, category: { id: categoryId } },
+      relations: { user: true, category: true },
+      order: { dateStart: 'ASC' },
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+  }
+
+ */

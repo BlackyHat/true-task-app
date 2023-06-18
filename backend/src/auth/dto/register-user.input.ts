@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEmail, MinLength } from 'class-validator';
-import { UserRoles } from 'src/users/entities/user.entity';
+import { UserRoles } from 'src/types/types';
 
 @InputType()
 export class RegisterUserInput {
@@ -10,5 +10,6 @@ export class RegisterUserInput {
   @Field()
   @MinLength(6, { message: 'Password must be more than 6 symbols' })
   password: string;
-  @Field({ nullable: true }) role?: UserRoles;
+  @Field((type) => UserRoles, { nullable: true, defaultValue: UserRoles.USER })
+  role?: UserRoles;
 }

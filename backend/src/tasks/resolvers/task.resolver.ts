@@ -15,21 +15,16 @@ export class TaskResolver {
   @UseGuards(JwtAuthGuard)
   async createTask(
     @Args('createTask') createTaskInput: CreateTaskInput,
-    @Context() context,
   ): Promise<TaskEntity> {
-    return await this.taskSevice.createTask(
-      createTaskInput,
-      +context.req.user.id,
-    );
+    return await this.taskSevice.createTask(createTaskInput);
   }
 
   @Query(() => [TaskEntity], { name: 'allTasks' })
   @UseGuards(JwtAuthGuard)
   async getAllTasks(
     @Args('categoryId') categoryId: number,
-    @Context() context,
   ): Promise<TaskEntity[]> {
-    return await this.taskSevice.getAllTasks(+context.req.user.id, categoryId);
+    return await this.taskSevice.getAllTasks(categoryId);
   }
 
   @Query(() => TaskEntity, { name: 'taskById' })
@@ -37,28 +32,16 @@ export class TaskResolver {
   async getOneTask(
     @Args('taskId') taskId: number,
     @Args('categoryId') categoryId: number,
-
-    @Context() context,
   ): Promise<TaskEntity> {
-    return await this.taskSevice.getOneTask(
-      +context.req.user.id,
-      categoryId,
-      taskId,
-    );
+    return await this.taskSevice.getOneTask(categoryId, taskId);
   }
 
   @Mutation(() => TaskEntity, { name: 'updateTask' })
   @UseGuards(JwtAuthGuard)
   async updateTask(
-    @Args('updateTask') updateUserInput: UpdateTaskInput,
-    @Args('categoryId') categoryId: number,
-    @Context() context,
+    @Args('updateTask') updateTaskInput: UpdateTaskInput,
   ): Promise<TaskEntity> {
-    return await this.taskSevice.updateTask(
-      +context.req.user.id,
-      categoryId,
-      updateUserInput,
-    );
+    return await this.taskSevice.updateTask(updateTaskInput);
   }
 
   @Mutation(() => Number, { name: 'deleteTask' })
@@ -66,12 +49,7 @@ export class TaskResolver {
   async removeTask(
     @Args('categoryId') categoryId: number,
     @Args('taskId') taskId: number,
-    @Context() context,
   ): Promise<string> {
-    return await this.taskSevice.removeTask(
-      +context.req.user.id,
-      categoryId,
-      taskId,
-    );
+    return await this.taskSevice.removeTask(categoryId, taskId);
   }
 }

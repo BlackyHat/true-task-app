@@ -1,18 +1,10 @@
 import { JwtService } from '@nestjs/jwt';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { UserService } from 'src/users/services/user.service';
-import * as bcrypt from 'bcrypt';
-import { IUser } from 'src/types/types';
-import { InputType } from '@nestjs/graphql';
-import { LoginUserInput } from '../dto/login-user.input';
+import * as bcrypt from 'bcryptjs';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { RegisterUserInput } from '../dto/register-user.input';
 
-@InputType()
-class LoginArgs {
-  email: string;
-  password: string;
-}
 @Injectable()
 export class AuthService {
   constructor(
@@ -45,8 +37,6 @@ export class AuthService {
     }
 
     const response = await this.userService.createUser(registerUserInput);
-    console.log('🚀 ~ AuthService ~ register ~ response:', response);
-
     return response;
   }
 }

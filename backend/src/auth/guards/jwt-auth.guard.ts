@@ -9,3 +9,19 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return ctx.getContext().req;
   }
 }
+
+/**
+ * export class JwtAuthGuard extends AuthGuard('jwt') {
+  canActivate(context: ExecutionContext) {
+    const request = context.switchToHttp().getRequest();
+    const page = parseInt(request.query.page, 10) || 1;
+    const limit = parseInt(request.query.limit, 10) || 10;
+
+    // додайте значення `page` та `limit` до об'єкту запиту (request)
+    request.query.page = page;
+    request.query.limit = limit;
+
+    return super.canActivate(context);
+  }
+}
+ */

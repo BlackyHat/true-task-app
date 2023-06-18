@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserInput } from 'src/auth/dto/register-user.input';
 
@@ -18,8 +18,9 @@ export class UserService {
     const newUser = await this.userRepository.save({
       email: user.email,
       password: await bcrypt.hash(user.password, 10),
+      role: user.role,
     });
-    delete user.password;
+    delete newUser.password;
     const token = this.jwtService.sign({
       email: newUser.email,
       id: newUser.id,

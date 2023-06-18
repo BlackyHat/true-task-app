@@ -11,6 +11,16 @@ type CategoryEntity {
   user: UserEntity!
 }
 
+"""The Categories object"""
+type CategoryResponse {
+  dateCreated: DateTime!
+  id: ID!
+  name: String!
+  tasks: TaskEntity
+  tasksCount: Int!
+  user: UserEntity!
+}
+
 input CreateCategoryInput {
   name: String!
 }
@@ -19,6 +29,7 @@ input CreateTaskInput {
   categoryId: Float!
   dateEnd: String!
   dateStart: String!
+  description: String
   name: String!
 }
 
@@ -46,11 +57,11 @@ type Mutation {
   login(loginUserInput: LoginUserInput!): LoginResponse!
   register(registerUserInput: RegisterUserInput!): RegisterResponse!
   updateCategory(updateCategory: UpdateCategoryInput!): CategoryEntity!
-  updateTask(categoryId: Float!, updateTask: UpdateTaskInput!): TaskEntity!
+  updateTask(updateTask: UpdateTaskInput!): TaskEntity!
 }
 
 type Query {
-  allCategories: [CategoryEntity!]!
+  allCategories: [CategoryResponse!]!
   allTasks(categoryId: Float!): [TaskEntity!]!
   categoryById(categoryId: Float!): CategoryEntity!
   profile: UserEntity!
@@ -65,7 +76,7 @@ type RegisterResponse {
 input RegisterUserInput {
   email: String!
   password: String!
-  role: String
+  role: userRoles = USER
 }
 
 """The Tasks object"""
@@ -73,9 +84,9 @@ type TaskEntity {
   category: CategoryEntity!
   dateEnd: DateTime!
   dateStart: DateTime!
+  description: String
   id: ID!
   name: String!
-  user: UserEntity!
 }
 
 input UpdateCategoryInput {
@@ -84,8 +95,10 @@ input UpdateCategoryInput {
 }
 
 input UpdateTaskInput {
+  categoryId: Float!
   dateEnd: String
   dateStart: String
+  description: String
   id: ID!
   name: String
 }
@@ -95,9 +108,8 @@ type UserEntity {
   categories: CategoryEntity!
   email: String!
   id: ID!
-  password: String!
+  password: String
   role: userRoles
-  tasks: TaskEntity!
 }
 
 enum userRoles {

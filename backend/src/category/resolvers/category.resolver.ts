@@ -1,10 +1,11 @@
 import { Resolver, Mutation, Args, Query, Context } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CategoryService } from '../services/category.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CategoryEntity } from '../entities/category.entity';
 import { CreateCategoryInput } from '../dto/create-category.input';
 import { UpdateCategoryInput } from '../dto/update-category.input';
+import { CategoryResponse } from '../dto/category-response.dto';
 
 @Resolver('Categories')
 export class CategoryResolver {
@@ -22,9 +23,9 @@ export class CategoryResolver {
     );
   }
 
-  @Query(() => [CategoryEntity], { name: 'allCategories' })
+  @Query(() => [CategoryResponse], { name: 'allCategories' })
   @UseGuards(JwtAuthGuard)
-  async getAllCategory(@Context() context): Promise<CategoryEntity[]> {
+  async getAllCategory(@Context() context): Promise<CategoryResponse[]> {
     return await this.categorySevice.getAllCategories(+context.req.user.id);
   }
 

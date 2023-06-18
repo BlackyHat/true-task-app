@@ -13,7 +13,7 @@ import {
 @Entity({ name: 'Tasks' })
 export class TaskEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number;
 
   @Field()
@@ -25,16 +25,15 @@ export class TaskEntity {
   dateEnd: Date;
 
   @Field()
-  @Column('varchar')
+  @Column('varchar', { length: 120 })
   name: string;
+
+  @Field({ nullable: true })
+  @Column('varchar', { length: 480 })
+  description?: string;
 
   @Field(() => CategoryEntity)
   @ManyToOne(() => CategoryEntity, (category) => category.tasks)
   @JoinColumn({ name: 'categoryId' })
   category: CategoryEntity;
-
-  @Field(() => UserEntity)
-  @ManyToOne(() => UserEntity, (user) => user.tasks)
-  @JoinColumn({ name: 'userId' })
-  user: UserEntity;
 }

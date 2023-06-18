@@ -1,23 +1,15 @@
-import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { CategoryEntity } from 'src/category/entities/category.entity';
 import { TaskEntity } from 'src/tasks/entities/task.entity';
+import { UserRoles } from 'src/types/types';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-
-export enum UserRoles {
-  ADMIN = 'admin',
-  USER = 'user',
-}
-
-registerEnumType(UserRoles, {
-  name: 'userRoles',
-});
 
 @ObjectType({ description: 'The Users object' })
 @Entity({ name: 'Users' })
 export class UserEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Field((type) => UserRoles, { nullable: true, defaultValue: UserRoles.USER })
   @Column({ type: 'enum', enum: UserRoles, default: UserRoles.USER })
@@ -27,7 +19,7 @@ export class UserEntity {
   @Column({ type: 'varchar', unique: true })
   email: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column('varchar')
   password: string;
 
@@ -36,8 +28,4 @@ export class UserEntity {
     onDelete: 'CASCADE',
   })
   categories: CategoryEntity[];
-
-  @Field((type) => TaskEntity)
-  @OneToMany(() => TaskEntity, (task) => task.user, { onDelete: 'CASCADE' })
-  tasks: TaskEntity[];
 }
