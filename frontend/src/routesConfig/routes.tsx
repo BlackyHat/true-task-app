@@ -1,77 +1,40 @@
-import { lazy } from 'react';
-import Layout from '../components/Layout/Layout';
 import RestrictedRoute from '../components/RestrictedRoute/RestrictedRoute';
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
 
-const TaskManagerPage = lazy(() =>
-  import('../pages/TaskManagerPage/TaskManagerPage').then((module) => ({
-    ...module,
-    default: module.TaskManagerPage,
-  }))
-);
-const CategoryPage = lazy(() =>
-  import('../pages/CategoryPage/CategoryPage').then((module) => ({
-    ...module,
-    default: module.CategoryPage,
-  }))
-);
-const LoginPage = lazy(() =>
-  import('../pages/LoginPage/LoginPage').then((module) => ({
-    ...module,
-    default: module.LoginPage,
-  }))
-);
-const RegisterPage = lazy(() =>
-  import('../pages/RegisterPage/RegisterPage').then((module) => ({
-    ...module,
-    default: module.RegisterPage,
-  }))
-);
-const NotFoundPage = lazy(() =>
-  import('../pages/NotFoundPage/NotFoundPage').then((module) => ({
-    ...module,
-    default: module.NotFoundPage,
-  }))
-);
+import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
+import { LoginPage } from '../pages/LoginPage/LoginPage';
+import { CategoryPage } from '../pages/CategoryPage/CategoryPage';
+import { TaskManagerPage } from '../pages/TaskManagerPage/TaskManagerPage';
+import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 
 export const routes = [
   {
-    elements: <Layout />,
+    path: '/login',
+    element: (
+      <RestrictedRoute redirectTo="/tasks-manager" component={<LoginPage />} />
+    ),
+  },
+  {
+    path: '/register',
+    element: (
+      <RestrictedRoute
+        redirectTo="/tasks-manager"
+        component={<RegisterPage />}
+      />
+    ),
+  },
+  {
+    path: '/',
+    element: <PrivateRoute redirectTo="/login" component={<CategoryPage />} />,
     children: [
       {
-        path: '/login',
-        element: (
-          <RestrictedRoute
-            redirectTo="/tasks-manager"
-            component={<LoginPage />}
-          />
-        ),
-      },
-      {
-        path: '/register',
-        element: (
-          <RestrictedRoute
-            redirectTo="/tasks-manager"
-            component={<RegisterPage />}
-          />
-        ),
-      },
-      {
-        path: 'tasks-manager',
+        path: '/:categoryId',
         element: (
           <PrivateRoute redirectTo="/" component={<TaskManagerPage />} />
         ),
-        children: [
-          {
-            path: '/:categoryId',
-            element: (
-              <PrivateRoute redirectTo="/" component={<CategoryPage />} />
-            ),
-          },
-        ],
       },
-
-      { path: '*', element: <NotFoundPage /> },
     ],
   },
+
+  { path: '*', element: <NotFoundPage /> },
 ];

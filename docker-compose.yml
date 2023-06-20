@@ -31,18 +31,18 @@ services:
       - TYPEORM_HOST=db
       - JWT_SECRET=${JWT_SECRET}
 
-  frontend:
-    stdin_open: true
-    build:
-      context: ./frontend
-    restart: unless-stopped
-    ports: -'3000:3000'
-    volumes:
-      - './:/app'
-      - '/app/node_modules'
-    # volumes:
-    #   - /app/node_modules
-    #   - ./frontend:/app
+  # frontend:
+  #   stdin_open: true
+  #   build:
+  #     context: ./frontend
+  #   restart: unless-stopped
+  #   ports: -'3000:3000'
+  #   volumes:
+  #     - './:/app'
+  #     - '/app/node_modules'
+  # volumes:
+  #   - /app/node_modules
+  #   - ./frontend:/app
 
   # frontend:
   #   container_name: reactapp-true-ts

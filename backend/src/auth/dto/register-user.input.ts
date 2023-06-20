@@ -10,6 +10,6 @@ export class RegisterUserInput {
   @Field()
   @MinLength(6, { message: 'Password must be more than 6 symbols' })
   password: string;
-  @Field((type) => UserRoles, { nullable: true, defaultValue: UserRoles.USER })
-  role?: UserRoles;
+  @Field((type) => String, { nullable: true, defaultValue: UserRoles.USER })
+  role?: String;
 }

@@ -1,11 +1,16 @@
-import React from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import { Navigate } from 'react-router';
 import { IRoutes } from '../../helpers/interfaces';
-import { useAuth } from '../../hooks/useAuth';
 
-const PrivateRoute = ({ component: Component, redirectTo = '/' }: IRoutes) => {
-  const { isLoggedIn } = useAuth();
-  return isLoggedIn ? <Navigate to={redirectTo} replace /> : Component;
+const PrivateRoute = ({
+  component: Component,
+  redirectTo = '/login',
+}: IRoutes) => {
+  const { isLoggedIn } = useContext(AuthContext);
+  console.log('PrivateRoute ====> isLoggedIn', isLoggedIn);
+
+  return !isLoggedIn ? <Navigate to={redirectTo} replace /> : Component;
 };
 
 export default PrivateRoute;

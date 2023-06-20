@@ -1,9 +1,15 @@
-import { useAuth } from '../../hooks/useAuth';
+import { AuthContext } from '../../context/AuthContext';
+import { useContext } from 'react';
+import { Button } from '@mui/material';
 
 const LogoutButton = () => {
-  const { logout } = useAuth();
+  const { logout } = useContext(AuthContext);
 
-  return <button onClick={logout}>Logout</button>;
+  return (
+    <>
+      <Button onClick={logout}>LOGOUT</Button>
+    </>
+  );
 };
 
 export default LogoutButton;

@@ -1,14 +1,15 @@
-import { AuthContext } from '../../context/AuthContext';
-import { useAuth } from '../../hooks/useAuth';
+import client from '../../apollo/apollo.client';
+import { AuthProvider } from '../../context/AuthContext';
 import { Router } from '../../routesConfig/router';
+import { ApolloProvider } from '@apollo/client';
 
 function App() {
-  const { user, login, logout } = useAuth();
-
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      <Router />
-    </AuthContext.Provider>
+    <AuthProvider>
+      <ApolloProvider client={client}>
+        <Router />
+      </ApolloProvider>
+    </AuthProvider>
   );
 }
 

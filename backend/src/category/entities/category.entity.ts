@@ -18,20 +18,20 @@ export class CategoryEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field({ nullable: true })
   @CreateDateColumn()
   dateCreated: Date;
 
-  @Field()
+  @Field({ nullable: true })
   @Column('varchar', { length: 200 })
   name: string;
 
-  @Field(() => UserEntity)
+  @Field(() => UserEntity, { nullable: true })
   @ManyToOne(() => UserEntity, (user) => user.categories)
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
-  @Field(() => TaskEntity,{nullable:true})
+  @Field(() => TaskEntity, { nullable: true })
   @OneToMany(() => TaskEntity, (task) => task.category, { onDelete: 'CASCADE' })
   tasks: TaskEntity[];
 }

@@ -11,9 +11,9 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field((type) => UserRoles, { nullable: true, defaultValue: UserRoles.USER })
+  @Field((type) => String, { nullable: true, defaultValue: UserRoles.USER })
   @Column({ type: 'enum', enum: UserRoles, default: UserRoles.USER })
-  role?: UserRoles;
+  role?: String;
 
   @Field()
   @Column({ type: 'varchar', unique: true })
