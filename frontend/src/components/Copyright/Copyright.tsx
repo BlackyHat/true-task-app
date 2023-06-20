@@ -9,8 +9,8 @@ const Copyright = (props: any) => {
       {...props}
     >
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        True React App
+      <Link color="inherit" href="http://linkedin.com/in/oleksandr-vp">
+        {`True React App `}
       </Link>
       {new Date().getFullYear()}
       {'.'}

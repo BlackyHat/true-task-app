@@ -3,11 +3,6 @@ export interface IRoutes {
   redirectTo: string;
 }
 
-export interface IUserData {
-  token: string | null;
-  user: IUser;
-}
-
 export interface IUser {
   id?: string;
   email: string;
@@ -19,10 +14,8 @@ export interface INewUser {
   role: string;
 }
 
-export interface IAuthContext {
-  user: IUserData | null;
-  isLoggedIn: boolean;
-  login: (userData: IUserData) => void;
+export interface IAuthContext extends IUserData {
+  login: (userData: ILoginData) => void;
   logout: () => void;
 }
 
@@ -31,7 +24,12 @@ export interface IAuthAction {
   payload?: IUserData;
 }
 
-export interface IAuthState {
-  user: IUserData | null;
-  isLoggedIn: boolean;
+export interface IUserData {
+  token: string | null;
+  user: IUser | null;
+  isLoggedIn?: boolean;
+}
+export interface ILoginData {
+  token: string;
+  user: IUser;
 }

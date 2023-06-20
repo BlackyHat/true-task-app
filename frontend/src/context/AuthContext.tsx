@@ -3,42 +3,39 @@ import {
   IUserData,
   IAuthContext,
   IAuthAction,
-  IAuthState,
+  ILoginData,
 } from '../helpers/interfaces';
 
-const initialState: IAuthState = {
+const initialState: IUserData = {
   user: null,
+  token: null,
   isLoggedIn: false,
 };
 
 if (localStorage.getItem('token')) {
-  initialState.user.token = localStorage.getItem('token');
-  console.log('ADD TOKEN FROM LOCAL STORAGE');
+  initialState.token = localStorage.getItem('token');
+  initialState.isLoggedIn = true;
 }
-
-// if (getItem('token')) {
-//   const decodedToken = jwtDecode(localStorage.getItem('token'));
-//   if (decodedToken.exp * 1000 < Date.now()) {
-//     localStorage.removeItem('token');
-//   } else {
-//     initialState.user = decodedToken;
-//     initialState.isLoggedIn = true;
-//   }
-// }
 
 export const AuthContext = createContext<IAuthContext>({
   user: null,
+  token: null,
   isLoggedIn: false,
-  login: (userData: IUserData) => {},
+  login: (userData: ILoginData) => {},
   logout: () => {},
 });
 
-function authReducer(state: IAuthState, action: IAuthAction): IAuthState {
+function authReducer(state: IUserData, action: IAuthAction): IUserData {
   switch (action.type) {
     case 'LOGIN':
-      return { ...state, user: action.payload || null };
+      return {
+        ...state,
+        user: action.payload?.user || null,
+        token: action.payload?.token || null,
+        isLoggedIn: true,
+      };
     case 'LOGOUT':
-      return { ...state, user: null };
+      return { ...state, user: null, token: null, isLoggedIn: false };
 
     default:
       return state;
@@ -47,9 +44,8 @@ function authReducer(state: IAuthState, action: IAuthAction): IAuthState {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
-  const isLoggedIn = state.user?.token !== null;
 
-  const login = (userData: IUserData) => {
+  const login = (userData: ILoginData) => {
     localStorage.setItem('token', userData.token);
     dispatch({
       type: 'LOGIN',
@@ -64,7 +60,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
   return (
     <AuthContext.Provider
-      value={{ user: state.user, isLoggedIn, login, logout }}
+      value={{
+        user: state.user,
+        isLoggedIn: state.isLoggedIn,
+        token: state.token,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

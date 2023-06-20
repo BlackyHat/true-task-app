@@ -1,14 +1,15 @@
-import { Button, LinearProgress } from '@mui/material';
-import { Formik, Form, Field } from 'formik';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import { TextField } from 'formik-mui';
+import { Formik, Form, Field } from 'formik';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../../qraphql/mutations/user.mutations';
 import { loginUserSchema } from '../../validation/validationYup';
+import { initLoginFormValues } from '../../constants/constants';
+
+import { Button, LinearProgress } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { LOGIN_USER } from '../../qraphql/mutations/user.mutations';
-import { initLoginFormValues } from '../../constants/constants';
-import { useMutation } from '@apollo/client';
-import { AuthContext } from '../../context/AuthContext';
-import { useContext } from 'react';
 
 const LoginForm = () => {
   const { login } = useContext(AuthContext);
@@ -25,8 +26,6 @@ const LoginForm = () => {
               loginUserInput: values,
             },
           });
-          console.log('RESPONSE LOGIN', data?.login);
-
           if (data?.login) {
             const { user, token } = data?.login;
             login({ user, token });
