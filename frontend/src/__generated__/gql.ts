@@ -16,6 +16,9 @@ const documents = {
     "mutation AddCategory($createCategory: CreateCategoryInput!) {\n   addCategory(createCategory: $createCategory) {\n        id\n        name\n        dateCreated\n    }\n  }\n": types.AddCategoryDocument,
     "mutation UpdateCategory($updateCategory: UpdateCategoryInput!) {\n    updateCategory(updateCategory: $updateCategory) {\n          dateCreated\n          id\n          name\n    }\n  }\n": types.UpdateCategoryDocument,
     "mutation DeleteCategory($categoryId: Float!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n": types.DeleteCategoryDocument,
+    "mutation AddTask($createTask: CreateTaskInput!) {\n    addTask(createTask: $createTask) {\n        dateEnd\n        dateStart\n        description\n        id\n        name\n    }\n  }\n": types.AddTaskDocument,
+    "mutation UpdateTask($updateTask: UpdateTaskInput!) {\n    updateTask(updateTask: $updateTask) {\n        dateEnd\n        dateStart\n        id\n        name\n    }\n  }\n": types.UpdateTaskDocument,
+    "mutation DeleteTask($categoryId: Float!, $taskId: Float!) {\n    deleteTask(categoryId: $categoryId, taskId: $taskId)\n  }\n": types.DeleteTaskDocument,
     "mutation Register($registerUserInput: RegisterUserInput!) {\n    register(registerUserInput: $registerUserInput) {\n      token\n      user {\n        email\n        id\n        role\n      }\n    }\n  }\n": types.RegisterDocument,
     "mutation Login($loginUserInput: LoginUserInput!) {\n    login(loginUserInput: $loginUserInput) {\n      token\n      user {\n        email\n        id\n        role\n      }\n    }\n  }\n": types.LoginDocument,
     "query AllCategories{\n    allCategories{\n        id\n        name\n        tasksCount\n        dateCreated\n    }\n  }\n": types.AllCategoriesDocument,
@@ -50,6 +53,18 @@ export function gql(source: "mutation UpdateCategory($updateCategory: UpdateCate
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "mutation DeleteCategory($categoryId: Float!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n"): (typeof documents)["mutation DeleteCategory($categoryId: Float!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "mutation AddTask($createTask: CreateTaskInput!) {\n    addTask(createTask: $createTask) {\n        dateEnd\n        dateStart\n        description\n        id\n        name\n    }\n  }\n"): (typeof documents)["mutation AddTask($createTask: CreateTaskInput!) {\n    addTask(createTask: $createTask) {\n        dateEnd\n        dateStart\n        description\n        id\n        name\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "mutation UpdateTask($updateTask: UpdateTaskInput!) {\n    updateTask(updateTask: $updateTask) {\n        dateEnd\n        dateStart\n        id\n        name\n    }\n  }\n"): (typeof documents)["mutation UpdateTask($updateTask: UpdateTaskInput!) {\n    updateTask(updateTask: $updateTask) {\n        dateEnd\n        dateStart\n        id\n        name\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "mutation DeleteTask($categoryId: Float!, $taskId: Float!) {\n    deleteTask(categoryId: $categoryId, taskId: $taskId)\n  }\n"): (typeof documents)["mutation DeleteTask($categoryId: Float!, $taskId: Float!) {\n    deleteTask(categoryId: $categoryId, taskId: $taskId)\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

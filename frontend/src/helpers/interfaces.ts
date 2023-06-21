@@ -10,6 +10,24 @@ export interface CategoryItemProps {
     dateCreated?: any;
   };
 }
+export interface TaskItemProps {
+  task: {
+    id: string;
+    name?: string | null | undefined;
+    dateStart?: any;
+    dateEnd?: any;
+    description: string;
+  };
+}
+export interface ITask {
+  name: string;
+  dateStart: string;
+  dateEnd: string;
+  description?: string;
+}
+export interface ITaskProp extends ITask {
+  id: string;
+}
 
 export interface IUser {
   id?: string;

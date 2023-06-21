@@ -2,7 +2,7 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 
 import Box from '@mui/material/Box';
-import CategoryForm from '../CategoryForm/CategoryForm';
+import TaskForm from '../TaskForm/TaskForm';
 
 interface Props {
   handleClose: () => void;
@@ -10,7 +10,8 @@ interface Props {
   type: 'add' | 'edit';
   closeNested?: () => void;
 }
-const CategoryEdit: React.FC<Props> = ({
+
+const TaskEdit: React.FC<Props> = ({
   type,
   categoryId,
   handleClose,
@@ -27,9 +28,9 @@ const CategoryEdit: React.FC<Props> = ({
       <Typography variant="h5" sx={{ my: 3 }}>
         {isAdd ? 'Add' : 'Edit'} Developers category
       </Typography>
-      <CategoryForm type={type} handleClose={onClose} categoryId={categoryId} />
+      <TaskForm type={type} handleClose={onClose} categoryId={categoryId} />
     </Box>
   );
 };
 
-export default CategoryEdit;
+export default TaskEdit;

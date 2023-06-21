@@ -1,8 +1,7 @@
 import { gql } from '../../__generated__';
 
-export const ADD_TASK =
-  gql(`mutation AddTask($createTaskInput: CreateTaskInput!) {
-    addTask(createTaskInput: $createTaskInput) {
+export const ADD_TASK = gql(`mutation AddTask($createTask: CreateTaskInput!) {
+    addTask(createTask: $createTask) {
         dateEnd
         dateStart
         description
@@ -12,8 +11,8 @@ export const ADD_TASK =
   }
 `);
 export const UPDATE_TASK =
-  gql(`mutation UpdateTask($updateTaskInput: UpdateTaskInput!) {
-    updateTask(updateTaskInput: $updateTaskInput) {
+  gql(`mutation UpdateTask($updateTask: UpdateTaskInput!) {
+    updateTask(updateTask: $updateTask) {
         dateEnd
         dateStart
         id
@@ -23,7 +22,7 @@ export const UPDATE_TASK =
 `);
 
 export const DELETE_TASK =
-  gql(`mutation DeleteTask($categoryId: Float!, $taskId: Float!): Float! {
+  gql(`mutation DeleteTask($categoryId: Float!, $taskId: Float!) {
     deleteTask(categoryId: $categoryId, taskId: $taskId)
   }
 `);
