@@ -1,87 +1,78 @@
 import { useContext } from 'react';
-import * as React from 'react';
-import { useToggle } from '../../hooks/useToggle';
-import { AuthContext } from '../../context/AuthContext';
-
-import Copyright from '../../components/Copyright/Copyright';
-import BasicModal from '../../components/BasicModal/BasicModal';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import LogoutIcon from '@mui/icons-material/Logout';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useToggle } from '../../hooks/useToggle';
+import { AuthContext } from '../../context/AuthContext';
 import TaskList from '../../components/TaskList/TaskList';
 import TaskEdit from '../../components/TaskEdit/TaskEdit';
-const defaultTheme = createTheme();
+import Copyright from '../../components/Copyright/Copyright';
+import BasicModal from '../../components/BasicModal/BasicModal';
+
+import LogoutIcon from '@mui/icons-material/Logout';
+import ReplyAllIcon from '@mui/icons-material/ReplyAll';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export const TaskManagerPage = () => {
   const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const addTask = useToggle();
 
   const { categoryId } = useParams();
-  console.log('🚀 ~ TaskManagerPage ~ categoryId:', categoryId);
+
+  const handleBackNavigate = () => {
+    navigate(`/tasks-manager`);
+  };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-      <AppBar position="relative" sx={{ textAlign: 'center', mx: 'auto' }}>
-        <Toolbar sx={{ textAlign: 'center', mx: 'auto', gap: '128px' }}>
-          <Typography variant="h5" noWrap>
-            TASKS
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <main>
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <Box
-            sx={{
-              mx: 'auto',
-              my: 4,
-              display: 'flex',
-              justifyContent: 'flex-end',
-              gap: '12px',
-              alignItems: 'center',
-            }}
+    <>
+      <Box
+        sx={{
+          my: 4,
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Button
+          size="medium"
+          variant="contained"
+          startIcon={<ReplyAllIcon />}
+          onClick={handleBackNavigate}
+        >
+          Back to categories
+        </Button>
+        <Box sx={{ gap: '12px', display: 'flex', flexDirection: 'row' }}>
+          <BasicModal name="Add Task" action={addTask}>
+            <TaskEdit
+              handleClose={addTask.onClose}
+              type="add"
+              categoryId={categoryId}
+            />
+          </BasicModal>
+          <Button
+            size="medium"
+            variant="contained"
+            onClick={logout}
+            endIcon={<LogoutIcon />}
           >
-            <BasicModal name="Add Task" action={addTask}>
-              <TaskEdit
-                handleClose={addTask.onClose}
-                type="add"
-                categoryId={categoryId}
-              />
-            </BasicModal>
-            <Button
-              size="medium"
-              variant="contained"
-              onClick={logout}
-              endIcon={<LogoutIcon />}
-            >
-              Log out
-            </Button>
-          </Box>
-          {categoryId && <TaskList categoryId={categoryId} />}
-        </Container>
-      </main>
+            Log out
+          </Button>
+        </Box>
+      </Box>
+      {categoryId && <TaskList categoryId={categoryId} />}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
         <Typography
           variant="subtitle1"
           align="center"
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          'Success is the ability to move from failure to failure without losing
+          enthusiasm. W. Churchill'
         </Typography>
         <Copyright />
       </Box>
-    </ThemeProvider>
+    </>
   );
 };

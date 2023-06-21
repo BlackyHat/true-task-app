@@ -1,7 +1,9 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_TASKS } from '../../qraphql/queries/tasks.queries';
+
+import Grid from '@mui/material/Grid';
+import TaskItem from '../TaskItem/TaskItem';
 
 export interface TaskListProp {
   categoryId: string;
@@ -12,14 +14,12 @@ const TaskList: React.FC<TaskListProp> = ({ categoryId }) => {
     variables: { categoryId: Number(categoryId) },
   });
 
-  console.log('TASKS', data);
-
   return (
     <Grid container spacing={4}>
-      {/* {data &&
-        data.allCategories.map((item) => (
-          <TaskItem key={item.id} task={item} />
-        ))} */}
+      {data &&
+        data.allTasks.map((item) => (
+          <TaskItem key={item.id} categoryId={categoryId} task={item} />
+        ))}
     </Grid>
   );
 };

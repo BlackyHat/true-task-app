@@ -28,7 +28,7 @@ interface Props {
 }
 
 const BasicModal: React.FC<Props> = ({ name, action, children }) => {
-  const isAdd = name === 'Add Category';
+  const isAdd = name.includes('Add');
   return (
     <div>
       <Button

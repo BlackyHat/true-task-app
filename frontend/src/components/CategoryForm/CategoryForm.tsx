@@ -5,8 +5,9 @@ import {
   UPDATE_CATEGORY,
 } from '../../qraphql/mutations/categories.mutations';
 import { GET_ONE_CATEGORY } from '../../qraphql/queries/categories.queries';
-
-import { updateCategorySchema } from '../../validation/validationYup';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { categorySchema } from '../../validation/validationYup';
 import { Button, LinearProgress } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-mui';
@@ -37,69 +38,78 @@ const CategoryForm: React.FC<Props> = ({ type, handleClose, categoryId }) => {
   };
 
   return (
-    <Formik
-      initialValues={getInitData()}
-      enableReinitialize={true}
-      validationSchema={updateCategorySchema}
-      onSubmit={async (values) => {
-        try {
-          if (!isAdd && categoryId) {
-            await updateCategory({
-              variables: {
-                updateCategory: { id: categoryId, name: values.name },
-              },
-            });
+    <>
+      <ToastContainer />
+      <Formik
+        initialValues={getInitData()}
+        enableReinitialize={true}
+        validationSchema={categorySchema}
+        onSubmit={async (values, { setErrors }) => {
+          try {
+            if (!isAdd && categoryId) {
+              await updateCategory({
+                variables: {
+                  updateCategory: { id: categoryId, name: values.name },
+                },
+              });
+              toast.success('Success. The category updated!');
+            }
+            if (isAdd) {
+              await addCategory({
+                variables: { createCategory: { name: values.name } },
+              });
+              toast.success('Success. The new category added!');
+            }
+            toast.success('Success. The new category added!');
+            handleClose();
+          } catch (error: any) {
+            setErrors(error.message);
+            toast.error('Sorry.Try some another name');
           }
-          if (isAdd) {
-            await addCategory({
-              variables: { createCategory: { name: values.name } },
-            });
-          }
-          handleClose();
-        } catch (error: any) {}
-      }}
-    >
-      {({ submitForm, isSubmitting }) => (
-        <Form>
-          <Field
-            component={TextField}
-            margin="dense"
-            required
-            fullWidth={true}
-            type="text"
-            name="name"
-            autoComplete="category name"
-            autoFocus
-            placeholder={'Enter new category name'}
-          />
-          {isSubmitting && <LinearProgress />}
-          <Box
-            sx={{
-              mx: 'auto',
-              my: 3,
-              display: 'flex',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              gap: '8px',
-            }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              disabled={isSubmitting}
-              onClick={submitForm}
-              fullWidth
+        }}
+      >
+        {({ submitForm, isSubmitting }) => (
+          <Form>
+            <Field
+              component={TextField}
+              margin="dense"
+              required
+              fullWidth={true}
+              type="text"
+              name="name"
+              autoComplete="category name"
+              autoFocus
+              placeholder={'Enter new category name'}
+            />
+            {isSubmitting && <LinearProgress />}
+            <Box
+              sx={{
+                mx: 'auto',
+                my: 3,
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                gap: '8px',
+              }}
             >
-              {isAdd ? 'Add' : 'Update'}
-            </Button>
-            <Button fullWidth variant="outlined" onClick={handleClose}>
-              Cancel
-            </Button>
-          </Box>
-        </Form>
-      )}
-    </Formik>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                disabled={isSubmitting}
+                onClick={submitForm}
+                fullWidth
+              >
+                {isAdd ? 'Add' : 'Update'}
+              </Button>
+              <Button fullWidth variant="outlined" onClick={handleClose}>
+                Cancel
+              </Button>
+            </Box>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 

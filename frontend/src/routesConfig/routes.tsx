@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom';
 import RestrictedRoute from '../components/RestrictedRoute/RestrictedRoute';
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
 
@@ -6,8 +7,15 @@ import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { CategoryPage } from '../pages/CategoryPage/CategoryPage';
 import { TaskManagerPage } from '../pages/TaskManagerPage/TaskManagerPage';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
+import Layout from '../components/Layout/Layout';
 
 export const routes = [
+  {
+    path: '/',
+    element: (
+      <RestrictedRoute redirectTo="/tasks-manager" component={<LoginPage />} />
+    ),
+  },
   {
     path: '/login',
     element: (
@@ -24,13 +32,21 @@ export const routes = [
     ),
   },
   {
-    path: '/tasks-manager',
-    element: <PrivateRoute redirectTo="/login" component={<CategoryPage />} />,
+    element: <Layout />,
+    children: [
+      {
+        path: '/tasks-manager',
+        element: (
+          <PrivateRoute redirectTo="/login" component={<CategoryPage />} />
+        ),
+      },
+      {
+        path: '/tasks-manager/:categoryId',
+        element: (
+          <PrivateRoute redirectTo="/login" component={<TaskManagerPage />} />
+        ),
+      },
+      { path: '*', element: <NotFoundPage /> },
+    ],
   },
-  {
-    path: '/tasks-manager/:categoryId',
-    element: <PrivateRoute redirectTo="/" component={<TaskManagerPage />} />,
-  },
-
-  { path: '*', element: <NotFoundPage /> },
 ];

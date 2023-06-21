@@ -9,10 +9,18 @@ interface Props {
   categoryId?: string;
   type: 'add' | 'edit';
   closeNested?: () => void;
+  task?: {
+    id: string;
+    name: string;
+    description?: string | null | undefined;
+    dateStart?: any;
+    dateEnd?: any;
+  };
 }
 
 const TaskEdit: React.FC<Props> = ({
   type,
+  task,
   categoryId,
   handleClose,
   closeNested,
@@ -26,9 +34,14 @@ const TaskEdit: React.FC<Props> = ({
   return (
     <Box>
       <Typography variant="h5" sx={{ my: 3 }}>
-        {isAdd ? 'Add' : 'Edit'} Developers category
+        {isAdd ? 'Add new' : 'Edit'} task category
       </Typography>
-      <TaskForm type={type} handleClose={onClose} categoryId={categoryId} />
+      <TaskForm
+        type={type}
+        task={task}
+        handleClose={onClose}
+        categoryId={categoryId}
+      />
     </Box>
   );
 };
