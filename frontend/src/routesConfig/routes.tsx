@@ -1,4 +1,3 @@
-import { Navigate } from 'react-router-dom';
 import RestrictedRoute from '../components/RestrictedRoute/RestrictedRoute';
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
 
@@ -6,7 +5,6 @@ import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { CategoryPage } from '../pages/CategoryPage/CategoryPage';
 import { TaskManagerPage } from '../pages/TaskManagerPage/TaskManagerPage';
-import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import Layout from '../components/Layout/Layout';
 
 export const routes = [
@@ -46,7 +44,12 @@ export const routes = [
           <PrivateRoute redirectTo="/login" component={<TaskManagerPage />} />
         ),
       },
-      { path: '*', element: <NotFoundPage /> },
+      {
+        path: '*',
+        element: (
+          <PrivateRoute redirectTo="/register" component={<CategoryPage />} />
+        ),
+      },
     ],
   },
 ];
