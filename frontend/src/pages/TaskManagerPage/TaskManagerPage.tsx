@@ -1,14 +1,3 @@
-// import React from 'react';
-
-// export const TaskManagerPage = () => {
-//   return <div>TaskManagerPage</div>;
-// };
-
-// import React from 'react';
-
-// export const CategoryPage = () => {
-//   return <div>CategoryPage</div>;
-// };
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';

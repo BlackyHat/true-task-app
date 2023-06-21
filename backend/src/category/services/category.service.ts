@@ -51,23 +51,6 @@ export class CategoryService {
     }
 
     return categoriesWithTasksCount;
-    // const categories = await this.categoryRepository
-    //   .createQueryBuilder('category')
-    //   .leftJoinAndSelect('category.tasks', 'task')
-    //   .select([
-    //     'category.id',
-    //     'category.dateCreated',
-    //     'category.name',
-    //     'COUNT(task.id) as tasksCount',
-    //   ])
-    //   .where('category.userId = :id', { id })
-    //   .groupBy('category.id')
-    //   .getRawMany();
-
-    // return categories.map((category) => {
-    //   const { id, dateCreated, name, tasksCount } = category;
-    //   return { id, dateCreated, name, tasksCount };
-    // });
   }
 
   async getOneCategory(userId: number, id: number): Promise<CategoryEntity> {
@@ -82,29 +65,29 @@ export class CategoryService {
   }
 
   async updateCategory(
-    userId: number,
+    id: number,
     updateCategoryInput: UpdateCategoryInput,
   ): Promise<CategoryEntity> {
-    const category = await this.getOneCategory(userId, updateCategoryInput.id);
+    const category = await this.getOneCategory(id, updateCategoryInput.id);
 
     if (!category) {
       throw new NotFoundException('Category not found');
     }
-    await this.findyUniqueName(userId, updateCategoryInput.name);
+    await this.findyUniqueName(id, updateCategoryInput.name);
+    category.name = updateCategoryInput.name;
+    await this.categoryRepository.save(category);
 
-    return await this.categoryRepository.save({
-      name: updateCategoryInput.name,
-    });
+    return category;
   }
 
-  async removeCategory(userId: number, id: number) {
+  async removeCategory(userId: number, id: number): Promise<number> {
     const category = await this.getOneCategory(userId, id);
     if (!category) {
       throw new NotFoundException('Category not found');
     }
 
     await this.categoryRepository.remove(category);
-    return `Category with id:${id} has been deleted successful`;
+    return id;
   }
 
   async findyUniqueName(id: number, name: string): Promise<CategoryEntity[]> {

@@ -1,10 +1,3 @@
-// import { useAuth } from '../../hooks/useAuth';
-// import { UserRoles } from '../../helpers/enums';
-//   const { login } = useAuth();
-//       role: UserRoles.USER,
-
-//       <button onClick={handleLogin}>Login</button>
-
 import { Link as RouterLink } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,17 +10,11 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../../components/Copyright/Copyright';
 import LoginForm from '../../components/LoginForm/LoginForm';
-// import { useApi } from '../../hooks/useApi';
 
-// TODO remove, this demo shouldn't need to reset the theme.
+// TODO:: remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export const LoginPage = () => {
-  // const { user, isLoading, error } = useApi();
-  // console.log('🚀 ~ LoginPage ~ error:', error);
-  // console.log('🚀 ~ LoginPage ~ user:', user);
-  // console.log('🚀 ~ LoginPage ~ isLoading:', isLoading);
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -67,13 +54,11 @@ export const LoginPage = () => {
             </Typography>
             <Box sx={{ mt: 1 }}>
               <LoginForm />
-              <Grid container>
-                <Grid item>
-                  <Link component={RouterLink} to="/register" variant="body2">
-                    {"Don't have an account? Register"}
-                  </Link>
-                </Grid>
-              </Grid>
+              <Box sx={{ textAlign: 'center' }}>
+                <Link component={RouterLink} to="/register" variant="body2">
+                  {"Don't have an account? Register"}
+                </Link>
+              </Box>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>

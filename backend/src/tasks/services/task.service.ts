@@ -38,41 +38,19 @@ export class TaskService {
   }
 
   async updateTask(updateTaskInput: UpdateTaskInput): Promise<TaskEntity> {
-    const { categoryId, id, ...updateTask } = updateTaskInput;
+    const { categoryId, id, ...updateFields } = updateTaskInput;
     const task = await this.getOneTask(categoryId, id);
-    if (!task) {
-      throw new NotFoundException('Task not found');
-    }
-    return await this.taskRepository.save({
-      ...task,
-      ...updateTask,
-    });
+    Object.assign(task, updateFields);
+
+    return await this.taskRepository.save(task);
   }
 
-  async removeTask(categoryId: number, taskId: number): Promise<string> {
+  async removeTask(categoryId: number, taskId: number): Promise<number> {
     const task = await this.getOneTask(categoryId, taskId);
     if (!task) {
       throw new NotFoundException('Task not found');
     }
     await this.taskRepository.remove(task);
-    return `Category with id:${taskId} has been deleted successful`;
+    return taskId;
   }
 }
-
-/**
- *   async getAllTasksWithPagination(
-    userId: number,
-    categoryId: number,
-    page: number,
-    limit: number,
-  ): Promise<TaskEntity[]> {
-    return await this.taskRepository.find({
-      where: { user: { id: userId }, category: { id: categoryId } },
-      relations: { user: true, category: true },
-      order: { dateStart: 'ASC' },
-      take: limit,
-      skip: (page - 1) * limit,
-    });
-  }
-
- */

@@ -96,8 +96,8 @@ input UpdateCategoryInput {
 
 input UpdateTaskInput {
   categoryId: Float!
-  dateEnd: String
-  dateStart: String
+  dateEnd: DateTime
+  dateStart: DateTime
   description: String
   id: ID!
   name: String

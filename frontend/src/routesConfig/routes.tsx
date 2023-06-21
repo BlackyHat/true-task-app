@@ -24,16 +24,12 @@ export const routes = [
     ),
   },
   {
-    path: '/',
+    path: '/tasks-manager',
     element: <PrivateRoute redirectTo="/login" component={<CategoryPage />} />,
-    children: [
-      {
-        path: '/:categoryId',
-        element: (
-          <PrivateRoute redirectTo="/" component={<TaskManagerPage />} />
-        ),
-      },
-    ],
+  },
+  {
+    path: '/tasks-manager/:categoryId',
+    element: <PrivateRoute redirectTo="/" component={<TaskManagerPage />} />,
   },
 
   { path: '*', element: <NotFoundPage /> },

@@ -18,7 +18,7 @@ const documents = {
     "mutation DeleteCategory($categoryId: Float!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n": types.DeleteCategoryDocument,
     "mutation Register($registerUserInput: RegisterUserInput!) {\n    register(registerUserInput: $registerUserInput) {\n      token\n      user {\n        email\n        id\n        role\n      }\n    }\n  }\n": types.RegisterDocument,
     "mutation Login($loginUserInput: LoginUserInput!) {\n    login(loginUserInput: $loginUserInput) {\n      token\n      user {\n        email\n        id\n        role\n      }\n    }\n  }\n": types.LoginDocument,
-    "query AllCategories{\n    allCategories{\n        id\n        name\n        tasksCount\n    }\n  }\n": types.AllCategoriesDocument,
+    "query AllCategories{\n    allCategories{\n        id\n        name\n        tasksCount\n        dateCreated\n    }\n  }\n": types.AllCategoriesDocument,
     "query CategoryById ($categoryId: Float!){\n    categoryById (categoryId: $categoryId){\n        dateCreated\n        id\n        name\n    }\n  }\n": types.CategoryByIdDocument,
     "query AllTasks($categoryId: Float!) {\n    allTasks (categoryId: $categoryId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n  }\n  }\n": types.AllTasksDocument,
     "query TaskById ($categoryId: Float!,$taskId: Float!){\n    taskById (categoryId: $categoryId, taskId: $taskId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n    }\n  }\n": types.TaskByIdDocument,
@@ -61,7 +61,7 @@ export function gql(source: "mutation Login($loginUserInput: LoginUserInput!) {\
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "query AllCategories{\n    allCategories{\n        id\n        name\n        tasksCount\n    }\n  }\n"): (typeof documents)["query AllCategories{\n    allCategories{\n        id\n        name\n        tasksCount\n    }\n  }\n"];
+export function gql(source: "query AllCategories{\n    allCategories{\n        id\n        name\n        tasksCount\n        dateCreated\n    }\n  }\n"): (typeof documents)["query AllCategories{\n    allCategories{\n        id\n        name\n        tasksCount\n        dateCreated\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

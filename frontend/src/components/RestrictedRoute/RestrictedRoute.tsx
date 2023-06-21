@@ -8,8 +8,6 @@ const RestrictedRoute = ({
   redirectTo = '/',
 }: IRoutes) => {
   const { isLoggedIn } = useContext(AuthContext);
-  console.log('RestrictedRoute ====> isLoggedIn', isLoggedIn);
-
   return isLoggedIn ? <Navigate to={redirectTo} replace /> : Component;
 };
 

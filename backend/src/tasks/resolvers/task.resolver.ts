@@ -49,7 +49,7 @@ export class TaskResolver {
   async removeTask(
     @Args('categoryId') categoryId: number,
     @Args('taskId') taskId: number,
-  ): Promise<string> {
+  ): Promise<Number> {
     return await this.taskSevice.removeTask(categoryId, taskId);
   }
 }

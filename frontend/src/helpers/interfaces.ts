@@ -2,6 +2,14 @@ export interface IRoutes {
   component: JSX.Element;
   redirectTo: string;
 }
+export interface CategoryItemProps {
+  category: {
+    id: string;
+    name?: string | null | undefined;
+    tasksCount: number;
+    dateCreated?: any;
+  };
+}
 
 export interface IUser {
   id?: string;

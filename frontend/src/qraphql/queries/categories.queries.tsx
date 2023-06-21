@@ -5,6 +5,7 @@ export const GET_ALL_CATEGORIES = gql(`query AllCategories{
         id
         name
         tasksCount
+        dateCreated
     }
   }
 `);

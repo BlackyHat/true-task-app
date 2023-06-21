@@ -49,3 +49,10 @@ export const createTaskSchema = Yup.object().shape({
     ),
   description: Yup.string().min(6, 'Too Short!').max(480, 'Too Long!'),
 });
+export const updateCategorySchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, 'Too Short!')
+    .max(120, 'Too Long!')
+    .required('Type something title')
+    .trim(),
+});

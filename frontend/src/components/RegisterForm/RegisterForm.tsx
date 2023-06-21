@@ -26,23 +26,13 @@ const RegisterForm = () => {
               registerUserInput: values,
             },
           });
-          console.log('RESPONSE', data?.register);
-
-          if (data?.register) {
-            const { user, token } = data?.register;
+          const registerData = data?.register;
+          if (registerData) {
+            const { user, token } = registerData;
             login({ user, token });
           }
-          // login(response?.user);
-          // await dispatch(authLoginThunk(values)).unwrap();
-          // Notify.success(t("notify.It's ok!"));
-          // Notify.info(t('notify.Welcome to your virtual Planning Calendar'));
         } catch (error: any) {
-          console.log('REGISTER VALUES', error.id);
-          if (error.id === 'Auth.form.error.email.taken')
-            setErrors({ email: 'auth:error.email_taken' });
-          else if (error.id === 'Auth.form.error.password.taken') {
-            setErrors({ password: 'auth:error.password' });
-          }
+          console.log('REGISTER ERRORS', error.id);
         }
       }}
     >
@@ -79,6 +69,7 @@ const RegisterForm = () => {
             name="User role"
             placeholder="Select user role"
             defaultValue={UserRoles.USER}
+            sx={{ textAlign: 'left' }}
           >
             <MenuItem value={UserRoles.ADMIN}>{UserRoles.ADMIN}</MenuItem>
             <MenuItem value={UserRoles.USER}>{UserRoles.USER}</MenuItem>

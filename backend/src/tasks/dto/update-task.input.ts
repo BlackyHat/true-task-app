@@ -9,9 +9,9 @@ export class UpdateTaskInput {
   @Field({ nullable: true })
   description?: string;
   @Field({ nullable: true })
-  dateStart: string;
+  dateStart: Date;
   @Field({ nullable: true })
-  dateEnd: string;
+  dateEnd: Date;
   @Field()
   categoryId: number;
 }

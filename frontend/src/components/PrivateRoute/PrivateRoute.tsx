@@ -7,10 +7,9 @@ const PrivateRoute = ({
   component: Component,
   redirectTo = '/login',
 }: IRoutes) => {
-  const { isLoggedIn } = useContext(AuthContext);
-  console.log('PrivateRoute ====> isLoggedIn', isLoggedIn);
-
-  return !isLoggedIn ? <Navigate to={redirectTo} replace /> : Component;
+  const { isLoggedIn, user } = useContext(AuthContext);
+  const shouldRedirect = !isLoggedIn && !user;
+  return shouldRedirect ? <Navigate to={redirectTo} replace /> : Component;
 };
 
 export default PrivateRoute;

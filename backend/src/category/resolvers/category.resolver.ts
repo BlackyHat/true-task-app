@@ -58,7 +58,7 @@ export class CategoryResolver {
   async removeCategory(
     @Args('categoryId') categoryId: number,
     @Context() context,
-  ): Promise<String> {
+  ): Promise<Number> {
     return await this.categorySevice.removeCategory(
       +context.req.user.id,
       categoryId,
