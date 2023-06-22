@@ -15,11 +15,11 @@ export class TaskEntity {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number;
 
-  @Field({ nullable: true })
+  @Field()
   @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
   dateStart: Date;
 
-  @Field({ nullable: true })
+  @Field()
   @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
   dateEnd: Date;
 
@@ -31,7 +31,7 @@ export class TaskEntity {
   @Column('varchar', { length: 480 })
   description?: string;
 
-  @Field(() => CategoryEntity, { nullable: true })
+  @Field(() => CategoryEntity,)
   @ManyToOne(() => CategoryEntity, (category) => category.tasks)
   @JoinColumn({ name: 'categoryId' })
   category: CategoryEntity;

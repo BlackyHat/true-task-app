@@ -4,21 +4,21 @@
 
 """The Categories object"""
 type CategoryEntity {
-  dateCreated: DateTime
+  dateCreated: DateTime!
   id: Int!
-  name: String
+  name: String!
   tasks: TaskEntity
-  user: UserEntity
+  user: UserEntity!
 }
 
 """The Categories object"""
 type CategoryResponse {
-  dateCreated: DateTime
+  dateCreated: DateTime!
   id: Int!
-  name: String
+  name: String!
   tasks: TaskEntity
   tasksCount: Int!
-  user: UserEntity
+  user: UserEntity!
 }
 
 input CreateCategoryInput {
@@ -27,8 +27,8 @@ input CreateCategoryInput {
 
 input CreateTaskInput {
   categoryId: Float!
-  dateEnd: String!
-  dateStart: String!
+  dateEnd: DateTime!
+  dateStart: DateTime!
   description: String
   name: String!
 }
@@ -76,14 +76,14 @@ type RegisterResponse {
 input RegisterUserInput {
   email: String!
   password: String!
-  role: String = "user"
+  role: String! = "user"
 }
 
 """The Tasks object"""
 type TaskEntity {
-  category: CategoryEntity
-  dateEnd: DateTime
-  dateStart: DateTime
+  category: CategoryEntity!
+  dateEnd: DateTime!
+  dateStart: DateTime!
   description: String
   id: Int!
   name: String!
@@ -96,18 +96,18 @@ input UpdateCategoryInput {
 
 input UpdateTaskInput {
   categoryId: Float!
-  dateEnd: DateTime
-  dateStart: DateTime
+  dateEnd: DateTime!
+  dateStart: DateTime!
   description: String
   id: Int!
-  name: String
+  name: String!
 }
 
 """The Users object"""
 type UserEntity {
   categories: CategoryEntity!
   email: String!
-  id: ID!
-  password: String
-  role: String
+  id: Int!
+  password: String!
+  role: String!
 }

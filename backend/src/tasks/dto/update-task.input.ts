@@ -4,13 +4,13 @@ import { Field, Int, InputType } from '@nestjs/graphql';
 export class UpdateTaskInput {
   @Field(() => Int)
   id: number;
-  @Field({ nullable: true })
+  @Field()
   name: string;
   @Field({ nullable: true })
   description?: string;
-  @Field({ nullable: true })
+  @Field()
   dateStart: Date;
-  @Field({ nullable: true })
+  @Field()
   dateEnd: Date;
   @Field()
   categoryId: number;

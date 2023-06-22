@@ -7,9 +7,9 @@ export class CreateTaskInput {
   @Field({ nullable: true })
   description?: string;
   @Field()
-  dateStart: string;
+  dateStart: Date;
   @Field()
-  dateEnd: string;
+  dateEnd: Date;
   @Field()
   categoryId: number;
 }

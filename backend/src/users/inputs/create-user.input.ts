@@ -5,6 +5,6 @@ export class CreateUserInput {
   @Field()
   email: string;
 
-  @Field({ nullable: true })
+  @Field()
   password: string;
 }

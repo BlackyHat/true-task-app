@@ -1,38 +1,65 @@
-export interface IRoutes {
-  component: JSX.Element;
-  redirectTo: string;
+export interface ICategory {
+  id: number;
+  name: string | null | undefined;
+  tasksCount: number;
+  dateCreated: Date;
 }
 export interface CategoryItemProps {
-  category: {
-    id: number;
-    name?: string | null | undefined;
-    tasksCount: number;
-    dateCreated?: any;
-  };
+  category: ICategory;
 }
-export interface TaskItemProps {
-  task: {
-    id: string;
-    name?: string | null | undefined;
-    dateStart?: any;
-    dateEnd?: any;
-    description: string;
-  };
+
+export interface ICategoryActionsProps {
+  id: number;
 }
+
+export interface ICategoryFormProps {
+  handleClose: () => void;
+  type: 'add' | 'edit';
+  categoryId?: number;
+}
+export interface ICategoryEditProps extends ICategoryFormProps {
+  closeNested?: () => void;
+}
+export interface ICategoryDeleteProps {
+  categoryId: number;
+  closeNested: () => void;
+  handleClose: () => void;
+}
+
 export interface ITask {
+  id: number;
   name: string;
-  dateStart: string;
-  dateEnd: string;
-  description?: string;
+  description?: string | null | undefined;
+  dateStart: Date;
+  dateEnd: Date;
 }
-export interface ITaskProp extends ITask {
-  id: string;
+export interface ITaskFormProps {
+  handleClose: () => void;
+  categoryId?: number;
+  task?: ITask;
+  type: 'add' | 'edit';
+}
+export interface ITaskDeleteProps {
+  handleClose: () => void;
+  categoryId: number;
+  taskId: number;
+}
+export interface ITaskEditProps extends ITaskFormProps {
+  closeNested?: () => void;
+}
+
+export interface ITaskListProp {
+  categoryId: number;
+}
+
+export interface ITaskListItemProps extends ITaskListProp {
+  task: ITask;
 }
 
 export interface IUser {
-  id?: string;
+  id?: number;
   email: string;
-  role?: string | null | undefined;
+  role: string;
 }
 export interface INewUser {
   email: string;
@@ -81,79 +108,11 @@ export interface IPopoverProps {
     handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   };
 }
-
-export interface ICategoryActionsProps {
-  id: number;
-}
-
-export interface ICategoryDeleteProps {
-  handleClose: () => void;
-  categoryId: number;
-  closeNested: () => void;
-}
-
-export interface ICategoryEditProps {
-  handleClose: () => void;
-  categoryId?: number;
-  type: 'add' | 'edit';
-  closeNested?: () => void;
-}
-
-export interface ICategoryFormProps {
-  handleClose: () => void;
-  categoryId?: number;
-  type: 'add' | 'edit';
-}
-
 export interface IReactDatePickerProps {
   name: string;
   initialValue?: Date;
 }
-
-export interface ITaskDeleteProps {
-  handleClose: () => void;
-  categoryId: number;
-  taskId: number;
-}
-
-export interface ITaskEditProps {
-  handleClose: () => void;
-  categoryId?: number;
-  type: 'add' | 'edit';
-  closeNested?: () => void;
-  task?: {
-    id: number;
-    name: string;
-    description?: string | null | undefined;
-    dateStart?: any;
-    dateEnd?: any;
-  };
-}
-
-export interface ITaskFormProps {
-  handleClose: () => void;
-  categoryId?: number;
-  task?: {
-    id: number;
-    name: string;
-    description?: string | null | undefined;
-    dateStart?: any;
-    dateEnd?: any;
-  };
-  type: 'add' | 'edit';
-}
-
-export interface ITaskListProp {
-  categoryId: number;
-}
-
-export interface ITaskListItemProps {
-  task: {
-    id: number;
-    name: string;
-    description?: string | null | undefined;
-    dateStart?: any;
-    dateEnd?: any;
-  };
-  categoryId: number;
+export interface IRoutes {
+  component: JSX.Element;
+  redirectTo: string;
 }

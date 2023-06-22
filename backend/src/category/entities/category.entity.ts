@@ -18,15 +18,15 @@ export class CategoryEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field({ nullable: true })
+  @Field()
   @CreateDateColumn()
   dateCreated: Date;
 
-  @Field({ nullable: true })
+  @Field()
   @Column('varchar', { length: 200 })
   name: string;
 
-  @Field(() => UserEntity, { nullable: true })
+  @Field(() => UserEntity)
   @ManyToOne(() => UserEntity, (user) => user.categories)
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
