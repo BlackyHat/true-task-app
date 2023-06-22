@@ -1,4 +1,4 @@
-# React NestJS PostgreSQL GraphQL Typeorm Docker 👔 🖥️ 📆
+# React NestJS PostgreSQL GraphQL Typeorm Docker 👔
 
 A simple full stack application based on React, NestJS, with PostgreSQL as the database, TypeORM is used to manage the
 TypeORM is used to manage the database and the backend uses GraphQL as its query language. All of this is packaged in docker-compose
@@ -120,6 +120,29 @@ yarn start
 npm install
 npm run start
 ```
+
+## The web application using the following technologies and libraries: 💼💼💼
+
+- Typescript
+- Node.js
+- Nest.js
+- GraphQl
+- Postgres
+- Type ORM
+- Docker Compose
+- React js
+- React hooks
+- Apollo
+- React Router Dom,
+
+## The project is created using Webpack and also includes: 💼💼💼
+
+- Moment,
+- Formik,
+- Yup,
+- Notifilix,
+- React datepicker,
+- JWT
 
 ## Stay in touch 🧑🏾‍💼 🌆 🏁
 
