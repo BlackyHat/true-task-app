@@ -19,6 +19,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ category }) => {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
+          backgroundColor: ' #adc0950f',
         }}
       >
         <CardContent

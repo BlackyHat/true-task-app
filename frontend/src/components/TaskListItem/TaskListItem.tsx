@@ -25,6 +25,7 @@ const TaskListItem: React.FC<ITaskListItemProps> = ({ task, categoryId }) => {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
+          backgroundColor: ' #adc0950f',
         }}
       >
         <CardContent
@@ -40,12 +41,35 @@ const TaskListItem: React.FC<ITaskListItemProps> = ({ task, categoryId }) => {
               {name}
             </Typography>
           </Box>
-          <Box>
-            <Typography variant="subtitle1">
-              Date Start {moment(dateStart).format('DD-MM-YYYY')}{' '}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              gap: '8px',
+            }}
+          >
+            <Typography
+              variant="subtitle1"
+              sx={{
+                background: '#5a5a7282',
+                color: 'white',
+                padding: 1,
+                borderRadius: '8px',
+              }}
+            >
+              Date Start {moment(dateStart).format('DD-MM-YYYY')}
             </Typography>
-            <Typography variant="subtitle1">
-              Date End {moment(dateEnd).format('DD-MM-YYYY')}{' '}
+            <Typography
+              variant="subtitle1"
+              sx={{
+                background: '#5a5a7282',
+                color: 'white',
+                padding: 1,
+                borderRadius: '8px',
+              }}
+            >
+              Date End {moment(dateEnd).format('DD-MM-YYYY')}
             </Typography>
           </Box>
         </CardContent>
@@ -56,7 +80,10 @@ const TaskListItem: React.FC<ITaskListItemProps> = ({ task, categoryId }) => {
             display: 'flex',
             justifyContent: 'space-evenly',
             alignItems: 'flex-end',
-            gap: '8px',
+            gap: '12px',
+            background: '#c7c7c782',
+            padding: 1,
+            borderRadius: '8px',
           }}
         >
           <BasicModal name="edit" action={editModal}>

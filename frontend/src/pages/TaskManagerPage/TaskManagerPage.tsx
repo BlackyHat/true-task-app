@@ -5,14 +5,13 @@ import { useToggle } from '../../hooks/useToggle';
 import { AuthContext } from '../../context/AuthContext';
 import TaskList from '../../components/TaskList/TaskList';
 import TaskEdit from '../../components/TaskEdit/TaskEdit';
-import Copyright from '../../components/Copyright/Copyright';
 import BasicModal from '../../components/BasicModal/BasicModal';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 import ReplyAllIcon from '@mui/icons-material/ReplyAll';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Container } from '@mui/material';
 
 export const TaskManagerPage = () => {
   const { logout } = useContext(AuthContext);
@@ -26,7 +25,13 @@ export const TaskManagerPage = () => {
   };
 
   return (
-    <>
+    <Container
+      sx={{
+        py: 4,
+        height: '70vh',
+      }}
+      maxWidth="md"
+    >
       <Box
         sx={{
           my: 4,
@@ -61,18 +66,6 @@ export const TaskManagerPage = () => {
         </Box>
       </Box>
       {categoryId && <TaskList categoryId={Number(categoryId)} />}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Success is the ability to move from failure to failure without losing
-          enthusiasm. W. Churchill
-        </Typography>
-        <Copyright />
-      </Box>
-    </>
+    </Container>
   );
 };

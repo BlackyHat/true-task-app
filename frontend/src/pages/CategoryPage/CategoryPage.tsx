@@ -2,22 +2,26 @@ import { useContext } from 'react';
 import { useToggle } from '../../hooks/useToggle';
 import { AuthContext } from '../../context/AuthContext';
 
-import Copyright from '../../components/Copyright/Copyright';
 import CategoryList from '../../components/CategoryList/CategoryList';
 import BasicModal from '../../components/BasicModal/BasicModal';
 import CategoryEdit from '../../components/CategoryEdit/CategoryEdit';
-
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Container } from '@mui/material';
 
 export const CategoryPage = () => {
   const { logout } = useContext(AuthContext);
   const addModal = useToggle();
 
   return (
-    <>
+    <Container
+      sx={{
+        py: 4,
+        height: '70vh',
+      }}
+      maxWidth="md"
+    >
       <Box
         sx={{
           mx: 'auto',
@@ -42,18 +46,6 @@ export const CategoryPage = () => {
       </Box>
 
       <CategoryList />
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Success is the ability to move from failure to failure without losing
-          enthusiasm. W. Churchill
-        </Typography>
-        <Copyright />
-      </Box>
-    </>
+    </Container>
   );
 };

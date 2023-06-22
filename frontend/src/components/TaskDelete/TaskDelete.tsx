@@ -2,6 +2,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_TASK } from '../../qraphql/mutations/tasks.mutations';
 import { GET_ALL_TASKS } from '../../qraphql/queries/tasks.queries';
@@ -14,23 +16,25 @@ const TaskDelete: React.FC<ITaskDeleteProps> = ({
 }) => {
   const [deleteTask] = useMutation(DELETE_TASK);
   const { refetch } = useQuery(GET_ALL_TASKS, {
-    variables: { categoryId: Number(categoryId) },
+    variables: { categoryId: categoryId },
+    fetchPolicy: 'no-cache',
   });
 
   const handleDelete = async () => {
     deleteTask({
       variables: {
-        categoryId: Number(categoryId),
-        taskId: Number(taskId),
+        categoryId: categoryId,
+        taskId: taskId,
       },
     });
     await refetch();
+    Notify.warning('Success. The task deleted!');
     handleClose && handleClose();
   };
   return (
     <Box>
       <Typography variant="h5" sx={{ textAlign: 'center' }}>
-        Are you sure for deleting this category?
+        Are you sure for deleting this task?
       </Typography>
       <Box
         sx={{

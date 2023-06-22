@@ -2,10 +2,13 @@ import { Suspense } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { LinearProgress } from '@mui/material';
+import Copyright from '../Copyright/Copyright';
 
 const Layout = () => {
   const location = useLocation();
@@ -28,10 +31,28 @@ const Layout = () => {
         </Toolbar>
       </AppBar>
 
-      <Container sx={{ py: 4 }} maxWidth="md">
-        <Suspense fallback={null}>
+      <Container sx={{ height: '70vh' }}>
+        <Suspense
+          fallback={
+            <LinearProgress
+              sx={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
+            />
+          }
+        >
           <Outlet />
         </Suspense>
+        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="text.secondary"
+            component="p"
+          >
+            Success is the ability to move from failure to failure without
+            losing enthusiasm. W. Churchill
+          </Typography>
+          <Copyright />
+        </Box>
       </Container>
     </>
   );
