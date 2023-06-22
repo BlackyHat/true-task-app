@@ -5,7 +5,7 @@
 """The Categories object"""
 type CategoryEntity {
   dateCreated: DateTime
-  id: ID!
+  id: Int!
   name: String
   tasks: TaskEntity
   user: UserEntity
@@ -14,7 +14,7 @@ type CategoryEntity {
 """The Categories object"""
 type CategoryResponse {
   dateCreated: DateTime
-  id: ID!
+  id: Int!
   name: String
   tasks: TaskEntity
   tasksCount: Int!
@@ -85,12 +85,12 @@ type TaskEntity {
   dateEnd: DateTime
   dateStart: DateTime
   description: String
-  id: ID!
+  id: Int!
   name: String!
 }
 
 input UpdateCategoryInput {
-  id: ID!
+  id: Int!
   name: String!
 }
 
@@ -99,7 +99,7 @@ input UpdateTaskInput {
   dateEnd: DateTime
   dateStart: DateTime
   description: String
-  id: ID!
+  id: Int!
   name: String
 }
 

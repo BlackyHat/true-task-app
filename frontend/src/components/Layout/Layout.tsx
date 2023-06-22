@@ -15,7 +15,7 @@ const Layout = () => {
     title = 'Categories';
   }
   if (categoryId) {
-    title = 'TaskManager';
+    title = 'Task Manager';
   }
   return (
     <>

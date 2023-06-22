@@ -2,25 +2,29 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_TASK } from '../../qraphql/mutations/tasks.mutations';
+import { GET_ALL_TASKS } from '../../qraphql/queries/tasks.queries';
+import { ITaskDeleteProps } from '../../helpers/interfaces';
 
-interface Props {
-  handleClose: () => void;
-  categoryId: string;
-  taskId: string;
-}
-
-const TaskDelete: React.FC<Props> = ({ categoryId, taskId, handleClose }) => {
+const TaskDelete: React.FC<ITaskDeleteProps> = ({
+  categoryId,
+  taskId,
+  handleClose,
+}) => {
   const [deleteTask] = useMutation(DELETE_TASK);
+  const { refetch } = useQuery(GET_ALL_TASKS, {
+    variables: { categoryId: Number(categoryId) },
+  });
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     deleteTask({
       variables: {
         categoryId: Number(categoryId),
         taskId: Number(taskId),
       },
     });
+    await refetch();
     handleClose && handleClose();
   };
   return (

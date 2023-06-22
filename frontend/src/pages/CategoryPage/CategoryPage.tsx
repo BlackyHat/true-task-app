@@ -49,8 +49,8 @@ export const CategoryPage = () => {
           color="text.secondary"
           component="p"
         >
-          'Success is the ability to move from failure to failure without losing
-          enthusiasm. W. Churchill'
+          Success is the ability to move from failure to failure without losing
+          enthusiasm. W. Churchill
         </Typography>
         <Copyright />
       </Box>

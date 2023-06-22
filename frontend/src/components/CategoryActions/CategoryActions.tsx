@@ -5,23 +5,20 @@ import { usePopup } from '../../hooks/usePopup';
 
 import BasicPopover from '../BasicPopover/BasicPopover';
 import BasicModal from '../BasicModal/BasicModal';
-import CategoryDeletePopup from '../CategoryDeletePopup/CategoryDeletePopup';
+import CategoryDelete from '../CategoryDelete/CategoryDelete';
 
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import CategoryEdit from '../CategoryEdit/CategoryEdit';
+import { ICategoryActionsProps } from '../../helpers/interfaces';
 
-interface Props {
-  id: string;
-}
-
-const CategoryActions: React.FC<Props> = ({ id }) => {
+const CategoryActions: React.FC<ICategoryActionsProps> = ({ id }) => {
   const navigate = useNavigate();
   const editModal = useToggle();
   const deleteModal = useToggle();
   const popup = usePopup();
 
-  const handleCategoryMore = (id: string) => {
+  const handleCategoryMore = (id: number) => {
     navigate(`/tasks-manager/${id}`);
   };
 
@@ -37,7 +34,7 @@ const CategoryActions: React.FC<Props> = ({ id }) => {
           />
         </BasicModal>
         <BasicModal name="delete" action={deleteModal}>
-          <CategoryDeletePopup
+          <CategoryDelete
             handleClose={deleteModal.onClose}
             categoryId={id}
             closeNested={popup.handleClose}

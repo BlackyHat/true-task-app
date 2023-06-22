@@ -2,27 +2,24 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_CATEGORY } from '../../qraphql/mutations/categories.mutations';
+import { GET_ALL_CATEGORIES } from '../../qraphql/queries/categories.queries';
+import { ICategoryDeleteProps } from '../../helpers/interfaces';
 
-interface Props {
-  handleClose: () => void;
-  categoryId: string;
-  closeNested: () => void;
-}
-
-const CategoryDeletePopup: React.FC<Props> = ({
+const CategoryDelete: React.FC<ICategoryDeleteProps> = ({
   categoryId,
   handleClose,
   closeNested,
 }) => {
   const [deleteCategory] = useMutation(DELETE_CATEGORY);
+  const { refetch } = useQuery(GET_ALL_CATEGORIES);
 
-  const handleDelete = () => {
-    //TODO: check fixes by @RESPONCE DOES NOT WORK BEFORE service from bd
-    deleteCategory({
+  const handleDelete = async () => {
+    await deleteCategory({
       variables: { categoryId: Number(categoryId) },
     });
+    await refetch();
     handleClose && handleClose();
     closeNested && closeNested();
   };
@@ -40,10 +37,10 @@ const CategoryDeletePopup: React.FC<Props> = ({
           alignItems: 'center',
         }}
       >
-        <Button size="small" variant="contained" onClick={handleDelete}>
+        <Button variant="contained" onClick={handleDelete}>
           Delete
         </Button>
-        <Button size="small" variant="outlined" onClick={handleClose}>
+        <Button variant="outlined" onClick={handleClose}>
           Cancel
         </Button>
       </Box>
@@ -51,4 +48,4 @@ const CategoryDeletePopup: React.FC<Props> = ({
   );
 };
 
-export default CategoryDeletePopup;
+export default CategoryDelete;

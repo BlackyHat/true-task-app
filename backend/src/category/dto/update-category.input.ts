@@ -1,9 +1,9 @@
-import { Field, ID, InputType } from '@nestjs/graphql';
+import { Field, Int, InputType } from '@nestjs/graphql';
 import { IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class UpdateCategoryInput {
-  @Field(() => ID)
+  @Field(() => Int)
   id: number;
   @Field()
   @IsNotEmpty()

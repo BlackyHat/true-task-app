@@ -1,6 +1,5 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { CategoryEntity } from 'src/category/entities/category.entity';
-import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
@@ -12,7 +11,7 @@ import {
 @ObjectType({ description: 'The Tasks object' })
 @Entity({ name: 'Tasks' })
 export class TaskEntity {
-  @Field(() => ID)
+  @Field(() => Int)
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number;
 

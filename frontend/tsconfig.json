@@ -20,5 +20,5 @@
     "strictNullChecks": true,
     "composite": true
   },
-  "include": ["src", "codegen.ts"]
+  "include": ["src", "codegen.ts", "../../vite-template/useLocalStorage.ts"]
 }

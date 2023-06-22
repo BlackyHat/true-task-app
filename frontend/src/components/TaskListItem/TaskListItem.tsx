@@ -11,19 +11,9 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { ITaskListItemProps } from '../../helpers/interfaces';
 
-export interface ITasksProps {
-  task: {
-    id: string;
-    name: string;
-    description?: string | null | undefined;
-    dateStart?: any;
-    dateEnd?: any;
-  };
-  categoryId: string;
-}
-
-const TaskItem: React.FC<ITasksProps> = ({ task, categoryId }) => {
+const TaskListItem: React.FC<ITaskListItemProps> = ({ task, categoryId }) => {
   const { id: taskId, name, dateStart, dateEnd } = task;
   const editModal = useToggle();
   const deleteModal = useToggle();
@@ -90,4 +80,4 @@ const TaskItem: React.FC<ITasksProps> = ({ task, categoryId }) => {
   );
 };
 
-export default TaskItem;
+export default TaskListItem;

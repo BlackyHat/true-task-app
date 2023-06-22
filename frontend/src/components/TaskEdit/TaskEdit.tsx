@@ -3,22 +3,9 @@ import Typography from '@mui/material/Typography';
 
 import Box from '@mui/material/Box';
 import TaskForm from '../TaskForm/TaskForm';
+import { ITaskEditProps } from '../../helpers/interfaces';
 
-interface Props {
-  handleClose: () => void;
-  categoryId?: string;
-  type: 'add' | 'edit';
-  closeNested?: () => void;
-  task?: {
-    id: string;
-    name: string;
-    description?: string | null | undefined;
-    dateStart?: any;
-    dateEnd?: any;
-  };
-}
-
-const TaskEdit: React.FC<Props> = ({
+const TaskEdit: React.FC<ITaskEditProps> = ({
   type,
   task,
   categoryId,

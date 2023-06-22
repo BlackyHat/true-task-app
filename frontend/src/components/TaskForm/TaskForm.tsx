@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { ADD_TASK, UPDATE_TASK } from '../../qraphql/mutations/tasks.mutations';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,23 +11,20 @@ import { TextField } from 'formik-mui';
 import { taskSchema } from '../../validation/validationYup';
 import { Button, LinearProgress } from '@mui/material';
 import Box from '@mui/material/Box';
+import { GET_ALL_TASKS } from '../../qraphql/queries/tasks.queries';
+import { ITaskFormProps } from '../../helpers/interfaces';
 
-interface Props {
-  handleClose: () => void;
-  categoryId?: string;
-  task?: {
-    id: string;
-    name: string;
-    description?: string | null | undefined;
-    dateStart?: any;
-    dateEnd?: any;
-  };
-  type: 'add' | 'edit';
-}
-
-const TaskForm: React.FC<Props> = ({ type, handleClose, categoryId, task }) => {
+const TaskForm: React.FC<ITaskFormProps> = ({
+  type,
+  handleClose,
+  categoryId,
+  task,
+}) => {
   const [updateTask] = useMutation(UPDATE_TASK);
   const [addTask] = useMutation(ADD_TASK);
+  const { refetch } = useQuery(GET_ALL_TASKS, {
+    variables: { categoryId: Number(categoryId) },
+  });
 
   const isAdd = type === 'add';
 
@@ -65,7 +62,7 @@ const TaskForm: React.FC<Props> = ({ type, handleClose, categoryId, task }) => {
               await updateTask({
                 variables: {
                   updateTask: {
-                    categoryId: Number(categoryId),
+                    categoryId: categoryId,
                     id: task.id,
                     dateEnd: values.dateEnd,
                     dateStart: values.dateStart,
@@ -94,6 +91,7 @@ const TaskForm: React.FC<Props> = ({ type, handleClose, categoryId, task }) => {
               });
               toast.success('Success. The new task added!');
             }
+            await refetch();
             handleClose();
           } catch (error: any) {
             setErrors(error.message);

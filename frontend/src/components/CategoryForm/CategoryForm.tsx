@@ -4,7 +4,10 @@ import {
   ADD_CATEGORY,
   UPDATE_CATEGORY,
 } from '../../qraphql/mutations/categories.mutations';
-import { GET_ONE_CATEGORY } from '../../qraphql/queries/categories.queries';
+import {
+  GET_ALL_CATEGORIES,
+  GET_ONE_CATEGORY,
+} from '../../qraphql/queries/categories.queries';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { categorySchema } from '../../validation/validationYup';
@@ -12,15 +15,16 @@ import { Button, LinearProgress } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import Box from '@mui/material/Box';
+import { ICategoryFormProps } from '../../helpers/interfaces';
 
-interface Props {
-  handleClose: () => void;
-  categoryId?: string;
-  type: 'add' | 'edit';
-}
-const CategoryForm: React.FC<Props> = ({ type, handleClose, categoryId }) => {
+const CategoryForm: React.FC<ICategoryFormProps> = ({
+  type,
+  handleClose,
+  categoryId,
+}) => {
   const [updateCategory] = useMutation(UPDATE_CATEGORY);
   const [addCategory] = useMutation(ADD_CATEGORY);
+  const { refetch } = useQuery(GET_ALL_CATEGORIES);
 
   const isAdd = type === 'add';
 
@@ -49,7 +53,10 @@ const CategoryForm: React.FC<Props> = ({ type, handleClose, categoryId }) => {
             if (!isAdd && categoryId) {
               await updateCategory({
                 variables: {
-                  updateCategory: { id: categoryId, name: values.name },
+                  updateCategory: {
+                    id: categoryId,
+                    name: values.name,
+                  },
                 },
               });
               toast.success('Success. The category updated!');
@@ -61,6 +68,7 @@ const CategoryForm: React.FC<Props> = ({ type, handleClose, categoryId }) => {
               toast.success('Success. The new category added!');
             }
             toast.success('Success. The new category added!');
+            await refetch();
             handleClose();
           } catch (error: any) {
             setErrors(error.message);

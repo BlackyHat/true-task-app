@@ -2,19 +2,9 @@ import * as React from 'react';
 import Popover from '@mui/material/Popover';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { IPopoverProps } from '../../helpers/interfaces';
 
-interface Props {
-  children: React.ReactNode;
-  action: {
-    id: string | undefined;
-    open: boolean;
-    anchorEl: HTMLButtonElement | null;
-    handleClose: () => void;
-    handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  };
-}
-
-const BasicPopover: React.FC<Props> = ({ action, children }) => {
+const BasicPopover: React.FC<IPopoverProps> = ({ action, children }) => {
   const { id, open, anchorEl, handleClose, handleClick } = action;
 
   return (

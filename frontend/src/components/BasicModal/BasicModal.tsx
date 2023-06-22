@@ -1,8 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
+import CloseIcon from '@mui/icons-material/Close';
 import AddTaskIcon from '@mui/icons-material/AddTask';
+import { IModalProps } from '../../helpers/interfaces';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -15,19 +18,14 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+const iconStyle = {
+  position: 'absolute',
+  top: '2rem',
+  right: '0',
+  transform: 'translate(-50%, -50%)',
+};
 
-interface Props {
-  name: string;
-  action: {
-    isOpen: boolean;
-    onOpen: () => void;
-    onClose: () => void;
-    toggle: () => void;
-  };
-  children: React.ReactNode;
-}
-
-const BasicModal: React.FC<Props> = ({ name, action, children }) => {
+const BasicModal: React.FC<IModalProps> = ({ name, action, children }) => {
   const isAdd = name.includes('Add');
   return (
     <div>
@@ -44,8 +42,18 @@ const BasicModal: React.FC<Props> = ({ name, action, children }) => {
         onClose={action.onClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{ borderColor: '#0000003b' }}
       >
-        <Box sx={style}>{children}</Box>
+        <Box sx={style}>
+          <IconButton
+            onClick={action.onClose}
+            sx={iconStyle}
+            aria-label="delete"
+          >
+            <CloseIcon />
+          </IconButton>
+          {children}
+        </Box>
       </Modal>
     </div>
   );

@@ -47,7 +47,7 @@ export const TaskManagerPage = () => {
             <TaskEdit
               handleClose={addTask.onClose}
               type="add"
-              categoryId={categoryId}
+              categoryId={Number(categoryId)}
             />
           </BasicModal>
           <Button
@@ -60,7 +60,7 @@ export const TaskManagerPage = () => {
           </Button>
         </Box>
       </Box>
-      {categoryId && <TaskList categoryId={categoryId} />}
+      {categoryId && <TaskList categoryId={Number(categoryId)} />}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography
           variant="subtitle1"
@@ -68,8 +68,8 @@ export const TaskManagerPage = () => {
           color="text.secondary"
           component="p"
         >
-          'Success is the ability to move from failure to failure without losing
-          enthusiasm. W. Churchill'
+          Success is the ability to move from failure to failure without losing
+          enthusiasm. W. Churchill
         </Typography>
         <Copyright />
       </Box>

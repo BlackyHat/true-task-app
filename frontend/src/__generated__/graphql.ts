@@ -22,7 +22,7 @@ export type Scalars = {
 export type CategoryEntity = {
   __typename?: 'CategoryEntity';
   dateCreated?: Maybe<Scalars['DateTime']['output']>;
-  id: Scalars['ID']['output'];
+  id: Scalars['Int']['output'];
   name?: Maybe<Scalars['String']['output']>;
   tasks?: Maybe<TaskEntity>;
   user?: Maybe<UserEntity>;
@@ -32,7 +32,7 @@ export type CategoryEntity = {
 export type CategoryResponse = {
   __typename?: 'CategoryResponse';
   dateCreated?: Maybe<Scalars['DateTime']['output']>;
-  id: Scalars['ID']['output'];
+  id: Scalars['Int']['output'];
   name?: Maybe<Scalars['String']['output']>;
   tasks?: Maybe<TaskEntity>;
   tasksCount: Scalars['Int']['output'];
@@ -160,12 +160,12 @@ export type TaskEntity = {
   dateEnd?: Maybe<Scalars['DateTime']['output']>;
   dateStart?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
+  id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
 };
 
 export type UpdateCategoryInput = {
-  id: Scalars['ID']['input'];
+  id: Scalars['Int']['input'];
   name: Scalars['String']['input'];
 };
 
@@ -174,7 +174,7 @@ export type UpdateTaskInput = {
   dateEnd?: InputMaybe<Scalars['DateTime']['input']>;
   dateStart?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['ID']['input'];
+  id: Scalars['Int']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -193,14 +193,14 @@ export type AddCategoryMutationVariables = Exact<{
 }>;
 
 
-export type AddCategoryMutation = { __typename?: 'Mutation', addCategory: { __typename?: 'CategoryEntity', id: string, name?: string | null, dateCreated?: any | null } };
+export type AddCategoryMutation = { __typename?: 'Mutation', addCategory: { __typename?: 'CategoryEntity', id: number, name?: string | null, dateCreated?: any | null } };
 
 export type UpdateCategoryMutationVariables = Exact<{
   updateCategory: UpdateCategoryInput;
 }>;
 
 
-export type UpdateCategoryMutation = { __typename?: 'Mutation', updateCategory: { __typename?: 'CategoryEntity', dateCreated?: any | null, id: string, name?: string | null } };
+export type UpdateCategoryMutation = { __typename?: 'Mutation', updateCategory: { __typename?: 'CategoryEntity', dateCreated?: any | null, id: number, name?: string | null } };
 
 export type DeleteCategoryMutationVariables = Exact<{
   categoryId: Scalars['Float']['input'];
@@ -214,14 +214,14 @@ export type AddTaskMutationVariables = Exact<{
 }>;
 
 
-export type AddTaskMutation = { __typename?: 'Mutation', addTask: { __typename?: 'TaskEntity', dateEnd?: any | null, dateStart?: any | null, description?: string | null, id: string, name: string } };
+export type AddTaskMutation = { __typename?: 'Mutation', addTask: { __typename?: 'TaskEntity', dateEnd?: any | null, dateStart?: any | null, description?: string | null, id: number, name: string } };
 
 export type UpdateTaskMutationVariables = Exact<{
   updateTask: UpdateTaskInput;
 }>;
 
 
-export type UpdateTaskMutation = { __typename?: 'Mutation', updateTask: { __typename?: 'TaskEntity', dateEnd?: any | null, dateStart?: any | null, id: string, name: string } };
+export type UpdateTaskMutation = { __typename?: 'Mutation', updateTask: { __typename?: 'TaskEntity', dateEnd?: any | null, dateStart?: any | null, id: number, name: string } };
 
 export type DeleteTaskMutationVariables = Exact<{
   categoryId: Scalars['Float']['input'];
@@ -248,21 +248,21 @@ export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Lo
 export type AllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllCategoriesQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryResponse', id: string, name?: string | null, tasksCount: number, dateCreated?: any | null }> };
+export type AllCategoriesQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryResponse', id: number, name?: string | null, tasksCount: number, dateCreated?: any | null }> };
 
 export type CategoryByIdQueryVariables = Exact<{
   categoryId: Scalars['Float']['input'];
 }>;
 
 
-export type CategoryByIdQuery = { __typename?: 'Query', categoryById: { __typename?: 'CategoryEntity', dateCreated?: any | null, id: string, name?: string | null } };
+export type CategoryByIdQuery = { __typename?: 'Query', categoryById: { __typename?: 'CategoryEntity', dateCreated?: any | null, id: number, name?: string | null } };
 
 export type AllTasksQueryVariables = Exact<{
   categoryId: Scalars['Float']['input'];
 }>;
 
 
-export type AllTasksQuery = { __typename?: 'Query', allTasks: Array<{ __typename?: 'TaskEntity', id: string, name: string, description?: string | null, dateStart?: any | null, dateEnd?: any | null }> };
+export type AllTasksQuery = { __typename?: 'Query', allTasks: Array<{ __typename?: 'TaskEntity', id: number, name: string, description?: string | null, dateStart?: any | null, dateEnd?: any | null }> };
 
 export type TaskByIdQueryVariables = Exact<{
   categoryId: Scalars['Float']['input'];
@@ -270,7 +270,7 @@ export type TaskByIdQueryVariables = Exact<{
 }>;
 
 
-export type TaskByIdQuery = { __typename?: 'Query', taskById: { __typename?: 'TaskEntity', id: string, name: string, description?: string | null, dateStart?: any | null, dateEnd?: any | null } };
+export type TaskByIdQuery = { __typename?: 'Query', taskById: { __typename?: 'TaskEntity', id: number, name: string, description?: string | null, dateStart?: any | null, dateEnd?: any | null } };
 
 
 export const AddCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createCategory"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateCategoryInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createCategory"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createCategory"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"dateCreated"}}]}}]}}]} as unknown as DocumentNode<AddCategoryMutation, AddCategoryMutationVariables>;
