@@ -1,4 +1,4 @@
-# React NestJS PostgreSQL GraphQL Typeorm Docker
+# React NestJS PostgreSQL GraphQL Typeorm Docker 👔 🖥️ 📆
 
 A simple full stack application based on React, NestJS, with PostgreSQL as the database, TypeORM is used to manage the
 TypeORM is used to manage the database and the backend uses GraphQL as its query language. All of this is packaged in docker-compose
@@ -50,7 +50,7 @@ TypeORM is used to manage the database and the backend uses GraphQL as its query
   </tr>
 </table>
 
-## Installation and startup method
+## Installation and startup method ⚙️ 🔐 ⛏️ 💻
 
 Copy the repository to yourself
 
@@ -72,7 +72,7 @@ TYPEORM_HOST=localhost
 JWT_SECRET=hide-me-secret
 ```
 
-### Using Docker
+### Using Docker 🏦 🌊 🌀 📙
 
 Make sure you have Docker installed (Docker is not supported by the Windows family of operating systems except
 Windows-Professional or Enterprise, as it requires Hyper-V, as stated on the company website Microsoft)
@@ -86,14 +86,14 @@ docker-compose up
 # --build - to rebuild the containers
 ```
 
-### Without Docker
+### Without Docker 🚀 📅 🤠 🔧
 
 - Install PostgreSQL from the official [website](https://www.postgresql.org/)
 - Create the server instance and the database, add the user and password as specified in the .env file
 - Make sure postgreSQL is up and running
 - Perform a dependency installation
 
-### Backend
+### Backend 🖥️ 🚧 ⛏️ 🕔
 
 ```shell
 cd backend/
@@ -107,7 +107,7 @@ npm install
 npm run start
 ```
 
-### Frontend
+### Frontend 🕔 🤠 🪐 📈
 
 ```shell
 cd frontend/
@@ -121,7 +121,7 @@ npm install
 npm run start
 ```
 
-## Stay in touch
+## Stay in touch 🧑🏾‍💼 🌆 🏁
 
 - Author - [Oleksandr Podoliako](https://github.com/BlackyHat)
 - Linkedin - [http://linkedin.com/in/oleksandr-vp](http://linkedin.com/in/oleksandr-vp)
