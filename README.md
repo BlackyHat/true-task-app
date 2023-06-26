@@ -1,16 +1,22 @@
 # React NestJS PostgreSQL GraphQL Typeorm Docker 👔
 
-A simple full stack application based on React, NestJS, with PostgreSQL as the database, TypeORM is used to manage the
-TypeORM is used to manage the database and the backend uses GraphQL as its query language. All of this is packaged in docker-compose
+A simple full stack application based on React, Typescript, NestJS, with PostgreSQL as the database, TypeORM is used to manage the database and the backend uses GraphQL as its query language. All of this is packaged in docker-compose
 
 <table width="100%">
   <tr>
     <td align="center" valign="middle" width="17%">
-      <a href="https://angular.io/">
+      <a href="https://reactjs.org/">
         <img height="50" alt="React" src="https://w7.pngwing.com/pngs/452/495/png-transparent-react-javascript-angularjs-ionic-github-text-logo-symmetry-thumbnail.png"/>
       </a>
       <br />
       React
+    </td>
+    <td align="center" valign="middle" width="17%">
+      <a href="https://www.typescriptlang.org/">
+        <img height="50" alt="Typescript" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1200px-Typescript_logo_2020.svg.png"/>
+      </a>
+      <br />
+      Typescript
     </td>
     <td align="center" valign="middle" width="17%">
       <a href="https://nestjs.com/">
