@@ -2,7 +2,7 @@ import { TaskService } from '../services/task.service';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
-import { Resolver, Mutation, Args, Query, Context } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Context, Int } from '@nestjs/graphql';
 import { TaskEntity } from '../entities/task.entity';
 import { CreateTaskInput } from '../dto/create-task.input';
 import { UpdateTaskInput } from '../dto/update-task.input';
@@ -22,7 +22,7 @@ export class TaskResolver {
   @Query(() => [TaskEntity], { name: 'allTasks' })
   @UseGuards(JwtAuthGuard)
   async getAllTasks(
-    @Args('categoryId') categoryId: number,
+    @Args('categoryId', { type: () => Int }) categoryId: number,
   ): Promise<TaskEntity[]> {
     return await this.taskSevice.getAllTasks(categoryId);
   }
@@ -30,8 +30,8 @@ export class TaskResolver {
   @Query(() => TaskEntity, { name: 'taskById' })
   @UseGuards(JwtAuthGuard)
   async getOneTask(
-    @Args('taskId') taskId: number,
-    @Args('categoryId') categoryId: number,
+    @Args('taskId', { type: () => Int }) taskId: number,
+    @Args('categoryId', { type: () => Int }) categoryId: number,
   ): Promise<TaskEntity> {
     return await this.taskSevice.getOneTask(categoryId, taskId);
   }
@@ -47,8 +47,8 @@ export class TaskResolver {
   @Mutation(() => Number, { name: 'deleteTask' })
   @UseGuards(JwtAuthGuard)
   async removeTask(
-    @Args('categoryId') categoryId: number,
-    @Args('taskId') taskId: number,
+    @Args('categoryId', { type: () => Int }) categoryId: number,
+    @Args('taskId', { type: () => Int }) taskId: number,
   ): Promise<Number> {
     return await this.taskSevice.removeTask(categoryId, taskId);
   }

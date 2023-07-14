@@ -32,7 +32,7 @@ import { TasksModule } from './tasks/tasks.module';
         synchronize: true,
         autoLoadEntities: true,
         logging: true,
-        // ssl: true,
+        ssl: true,
       }),
     }),
     AuthModule,

@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Query, Context } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Context, Int } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -14,7 +14,8 @@ export class CategoryResolver {
   @Mutation(() => CategoryEntity, { name: 'addCategory' })
   @UseGuards(JwtAuthGuard)
   async createCategory(
-    @Args('createCategory') createCategory: CreateCategoryInput,
+    @Args('createCategory')
+    createCategory: CreateCategoryInput,
     @Context() context,
   ): Promise<CategoryEntity> {
     return this.categorySevice.createCategory(
@@ -32,7 +33,7 @@ export class CategoryResolver {
   @Query(() => CategoryEntity, { name: 'categoryById' })
   @UseGuards(JwtAuthGuard)
   async getOneCategory(
-    @Args('categoryId') categoryId: number,
+    @Args('categoryId', { type: () => Int }) categoryId: number,
     @Context() context,
   ): Promise<CategoryEntity> {
     return await this.categorySevice.getOneCategory(
@@ -56,7 +57,7 @@ export class CategoryResolver {
   @Mutation(() => Number, { name: 'deleteCategory' })
   @UseGuards(JwtAuthGuard)
   async removeCategory(
-    @Args('categoryId') categoryId: number,
+    @Args('categoryId', { type: () => Int }) categoryId: number,
     @Context() context,
   ): Promise<Number> {
     return await this.categorySevice.removeCategory(
