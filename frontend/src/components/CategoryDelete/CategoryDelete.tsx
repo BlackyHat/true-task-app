@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { DELETE_CATEGORY } from '../../qraphql/mutations/categories.mutations';
 import { GET_ALL_CATEGORIES } from '../../qraphql/queries/categories.queries';
 import { ICategoryDeleteProps } from '../../helpers/interfaces';
@@ -14,14 +14,14 @@ const CategoryDelete: React.FC<ICategoryDeleteProps> = ({
   handleClose,
   closeNested,
 }) => {
-  const [deleteCategory] = useMutation(DELETE_CATEGORY);
-  const { refetch } = useQuery(GET_ALL_CATEGORIES, { fetchPolicy: 'no-cache' });
+  const [deleteCategory] = useMutation(DELETE_CATEGORY, {
+    refetchQueries: [GET_ALL_CATEGORIES],
+  });
 
   const handleDelete = async () => {
     await deleteCategory({
       variables: { categoryId: categoryId },
     });
-    await refetch();
     Notify.warning('Success. The task deleted!');
     handleClose && handleClose();
     closeNested && closeNested();

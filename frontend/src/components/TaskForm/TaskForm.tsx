@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { ADD_TASK, UPDATE_TASK } from '../../qraphql/mutations/tasks.mutations';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
@@ -12,6 +12,7 @@ import { Button, LinearProgress } from '@mui/material';
 import Box from '@mui/material/Box';
 import { GET_ALL_TASKS } from '../../qraphql/queries/tasks.queries';
 import { ITaskFormProps } from '../../helpers/interfaces';
+import { GET_ALL_CATEGORIES } from '../../qraphql/queries/categories.queries';
 
 const TaskForm: React.FC<ITaskFormProps> = ({
   type,
@@ -19,13 +20,12 @@ const TaskForm: React.FC<ITaskFormProps> = ({
   categoryId,
   task,
 }) => {
-  const [updateTask] = useMutation(UPDATE_TASK);
-  const [addTask] = useMutation(ADD_TASK);
-  const { refetch } = useQuery(GET_ALL_TASKS, {
-    variables: { categoryId: Number(categoryId) },
-    fetchPolicy: 'no-cache',
+  const [updateTask] = useMutation(UPDATE_TASK, {
+    refetchQueries: [GET_ALL_TASKS],
   });
-
+  const [addTask] = useMutation(ADD_TASK, {
+    refetchQueries: [GET_ALL_CATEGORIES, GET_ALL_TASKS],
+  });
   const isAdd = type === 'add';
 
   const getInitData = () => {
@@ -86,7 +86,6 @@ const TaskForm: React.FC<ITaskFormProps> = ({
             });
             Notify.success('Success. The new task added!');
           }
-          await refetch();
           handleClose();
         } catch (error: any) {
           setErrors(error.message);

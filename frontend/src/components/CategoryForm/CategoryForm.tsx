@@ -21,9 +21,12 @@ const CategoryForm: React.FC<ICategoryFormProps> = ({
   handleClose,
   categoryId,
 }) => {
-  const [updateCategory] = useMutation(UPDATE_CATEGORY);
-  const [addCategory] = useMutation(ADD_CATEGORY);
-  const { refetch } = useQuery(GET_ALL_CATEGORIES, { fetchPolicy: 'no-cache' });
+  const [updateCategory] = useMutation(UPDATE_CATEGORY, {
+    refetchQueries: [GET_ALL_CATEGORIES],
+  });
+  const [addCategory] = useMutation(ADD_CATEGORY, {
+    refetchQueries: [GET_ALL_CATEGORIES],
+  });
 
   const isAdd = type === 'add';
 
@@ -64,7 +67,6 @@ const CategoryForm: React.FC<ICategoryFormProps> = ({
             });
             Notify.success('Success. The new category added!');
           }
-          await refetch();
           handleClose();
         } catch (error: any) {
           setErrors(error.message);
