@@ -23,7 +23,7 @@ const Layout = () => {
   return (
     <>
       <CssBaseline />
-      <AppBar position="relative" sx={{ textAlign: 'center', mx: 'auto' }}>
+      <AppBar position="relative" sx={{ textAlign: 'center' }}>
         <Toolbar sx={{ textAlign: 'center', mx: 'auto', gap: '128px' }}>
           <Typography variant="h5" noWrap>
             {title}
@@ -31,7 +31,7 @@ const Layout = () => {
         </Toolbar>
       </AppBar>
 
-      <Container sx={{ height: '70vh' }}>
+      <Container sx={{ minHeight: '100vh', py: '64px' }}>
         <Suspense
           fallback={
             <LinearProgress
@@ -41,19 +41,19 @@ const Layout = () => {
         >
           <Outlet />
         </Suspense>
-        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-          >
-            Success is the ability to move from failure to failure without
-            losing enthusiasm. W. Churchill
-          </Typography>
-          <Copyright />
-        </Box>
       </Container>
+      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          Success is the ability to move from failure to failure without losing
+          enthusiasm. W. Churchill
+        </Typography>
+        <Copyright />
+      </Box>
     </>
   );
 };

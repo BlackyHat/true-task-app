@@ -11,7 +11,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ReplyAllIcon from '@mui/icons-material/ReplyAll';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { Container } from '@mui/material';
 
 export const TaskManagerPage = () => {
   const { logout } = useContext(AuthContext);
@@ -25,13 +24,7 @@ export const TaskManagerPage = () => {
   };
 
   return (
-    <Container
-      sx={{
-        py: 4,
-        height: '70vh',
-      }}
-      maxWidth="md"
-    >
+    <>
       <Box
         sx={{
           my: 4,
@@ -47,7 +40,7 @@ export const TaskManagerPage = () => {
         >
           Back to categories
         </Button>
-        <Box sx={{ gap: '12px', display: 'flex', flexDirection: 'row' }}>
+        <Box sx={{ gap: '8px', display: 'flex', flexDirection: 'row' }}>
           <BasicModal name="Add Task" action={addTask}>
             <TaskEdit
               handleClose={addTask.onClose}
@@ -66,6 +59,6 @@ export const TaskManagerPage = () => {
         </Box>
       </Box>
       {categoryId && <TaskList categoryId={Number(categoryId)} />}
-    </Container>
+    </>
   );
 };

@@ -18,8 +18,7 @@ export const UPDATE_CATEGORY =
     }
   }
 `);
-export const DELETE_CATEGORY =
-  gql(`mutation DeleteCategory($categoryId: Float!) {
+export const DELETE_CATEGORY = gql(`mutation DeleteCategory($categoryId: Int!) {
     deleteCategory(categoryId: $categoryId)
   }
 `);

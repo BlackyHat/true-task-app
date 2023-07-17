@@ -10,7 +10,7 @@ export const GET_ALL_CATEGORIES = gql(`query AllCategories{
   }
 `);
 
-export const GET_ONE_CATEGORY = gql(`query CategoryById ($categoryId: Float!){
+export const GET_ONE_CATEGORY = gql(`query CategoryById ($categoryId: Int!){
     categoryById (categoryId: $categoryId){
         dateCreated
         id

@@ -15,16 +15,16 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "mutation AddCategory($createCategory: CreateCategoryInput!) {\n   addCategory(createCategory: $createCategory) {\n        id\n        name\n        dateCreated\n    }\n  }\n": types.AddCategoryDocument,
     "mutation UpdateCategory($updateCategory: UpdateCategoryInput!) {\n    updateCategory(updateCategory: $updateCategory) {\n          dateCreated\n          id\n          name\n    }\n  }\n": types.UpdateCategoryDocument,
-    "mutation DeleteCategory($categoryId: Float!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n": types.DeleteCategoryDocument,
+    "mutation DeleteCategory($categoryId: Int!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n": types.DeleteCategoryDocument,
     "mutation AddTask($createTask: CreateTaskInput!) {\n    addTask(createTask: $createTask) {\n        dateEnd\n        dateStart\n        description\n        id\n        name\n    }\n  }\n": types.AddTaskDocument,
     "mutation UpdateTask($updateTask: UpdateTaskInput!) {\n    updateTask(updateTask: $updateTask) {\n        dateEnd\n        dateStart\n        id\n        name\n    }\n  }\n": types.UpdateTaskDocument,
-    "mutation DeleteTask($categoryId: Float!, $taskId: Float!) {\n    deleteTask(categoryId: $categoryId, taskId: $taskId)\n  }\n": types.DeleteTaskDocument,
+    "mutation DeleteTask($categoryId: Int!, $taskId: Int!) {\n    deleteTask(categoryId: $categoryId, taskId: $taskId)\n  }\n": types.DeleteTaskDocument,
     "mutation Register($registerUserInput: RegisterUserInput!) {\n    register(registerUserInput: $registerUserInput) {\n      token\n      user {\n        email\n        id\n        role\n      }\n    }\n  }\n": types.RegisterDocument,
     "mutation Login($loginUserInput: LoginUserInput!) {\n    login(loginUserInput: $loginUserInput) {\n      token\n      user {\n        email\n        id\n        role\n      }\n    }\n  }\n": types.LoginDocument,
     "query AllCategories{\n    allCategories{\n        id\n        name\n        tasksCount\n        dateCreated\n    }\n  }\n": types.AllCategoriesDocument,
-    "query CategoryById ($categoryId: Float!){\n    categoryById (categoryId: $categoryId){\n        dateCreated\n        id\n        name\n    }\n  }\n": types.CategoryByIdDocument,
-    "query AllTasks($categoryId: Float!) {\n    allTasks (categoryId: $categoryId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n  }\n  }\n": types.AllTasksDocument,
-    "query TaskById ($categoryId: Float!,$taskId: Float!){\n    taskById (categoryId: $categoryId, taskId: $taskId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n    }\n  }\n": types.TaskByIdDocument,
+    "query CategoryById ($categoryId: Int!){\n    categoryById (categoryId: $categoryId){\n        dateCreated\n        id\n        name\n    }\n  }\n": types.CategoryByIdDocument,
+    "query AllTasks($categoryId: Int!) {\n    allTasks (categoryId: $categoryId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n  }\n  }\n": types.AllTasksDocument,
+    "query TaskById ($categoryId: Int!,$taskId: Int!){\n    taskById (categoryId: $categoryId, taskId: $taskId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n    }\n  }\n": types.TaskByIdDocument,
 };
 
 /**
@@ -52,7 +52,7 @@ export function gql(source: "mutation UpdateCategory($updateCategory: UpdateCate
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "mutation DeleteCategory($categoryId: Float!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n"): (typeof documents)["mutation DeleteCategory($categoryId: Float!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n"];
+export function gql(source: "mutation DeleteCategory($categoryId: Int!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n"): (typeof documents)["mutation DeleteCategory($categoryId: Int!) {\n    deleteCategory(categoryId: $categoryId)\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -64,7 +64,7 @@ export function gql(source: "mutation UpdateTask($updateTask: UpdateTaskInput!) 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "mutation DeleteTask($categoryId: Float!, $taskId: Float!) {\n    deleteTask(categoryId: $categoryId, taskId: $taskId)\n  }\n"): (typeof documents)["mutation DeleteTask($categoryId: Float!, $taskId: Float!) {\n    deleteTask(categoryId: $categoryId, taskId: $taskId)\n  }\n"];
+export function gql(source: "mutation DeleteTask($categoryId: Int!, $taskId: Int!) {\n    deleteTask(categoryId: $categoryId, taskId: $taskId)\n  }\n"): (typeof documents)["mutation DeleteTask($categoryId: Int!, $taskId: Int!) {\n    deleteTask(categoryId: $categoryId, taskId: $taskId)\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -80,15 +80,15 @@ export function gql(source: "query AllCategories{\n    allCategories{\n        i
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "query CategoryById ($categoryId: Float!){\n    categoryById (categoryId: $categoryId){\n        dateCreated\n        id\n        name\n    }\n  }\n"): (typeof documents)["query CategoryById ($categoryId: Float!){\n    categoryById (categoryId: $categoryId){\n        dateCreated\n        id\n        name\n    }\n  }\n"];
+export function gql(source: "query CategoryById ($categoryId: Int!){\n    categoryById (categoryId: $categoryId){\n        dateCreated\n        id\n        name\n    }\n  }\n"): (typeof documents)["query CategoryById ($categoryId: Int!){\n    categoryById (categoryId: $categoryId){\n        dateCreated\n        id\n        name\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "query AllTasks($categoryId: Float!) {\n    allTasks (categoryId: $categoryId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n  }\n  }\n"): (typeof documents)["query AllTasks($categoryId: Float!) {\n    allTasks (categoryId: $categoryId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n  }\n  }\n"];
+export function gql(source: "query AllTasks($categoryId: Int!) {\n    allTasks (categoryId: $categoryId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n  }\n  }\n"): (typeof documents)["query AllTasks($categoryId: Int!) {\n    allTasks (categoryId: $categoryId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n  }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "query TaskById ($categoryId: Float!,$taskId: Float!){\n    taskById (categoryId: $categoryId, taskId: $taskId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n    }\n  }\n"): (typeof documents)["query TaskById ($categoryId: Float!,$taskId: Float!){\n    taskById (categoryId: $categoryId, taskId: $taskId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n    }\n  }\n"];
+export function gql(source: "query TaskById ($categoryId: Int!,$taskId: Int!){\n    taskById (categoryId: $categoryId, taskId: $taskId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n    }\n  }\n"): (typeof documents)["query TaskById ($categoryId: Int!,$taskId: Int!){\n    taskById (categoryId: $categoryId, taskId: $taskId){\n        id\n        name\n        description\n        dateStart\n        dateEnd\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

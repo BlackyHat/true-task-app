@@ -8,20 +8,13 @@ import CategoryEdit from '../../components/CategoryEdit/CategoryEdit';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { Container } from '@mui/material';
 
 export const CategoryPage = () => {
   const { logout } = useContext(AuthContext);
   const addModal = useToggle();
 
   return (
-    <Container
-      sx={{
-        py: 4,
-        height: '70vh',
-      }}
-      maxWidth="md"
-    >
+    <>
       <Box
         sx={{
           mx: 'auto',
@@ -46,6 +39,6 @@ export const CategoryPage = () => {
       </Box>
 
       <CategoryList />
-    </Container>
+    </>
   );
 };

@@ -53,7 +53,7 @@ type Mutation {
   addCategory(createCategory: CreateCategoryInput!): CategoryEntity!
   addTask(createTask: CreateTaskInput!): TaskEntity!
   deleteCategory(categoryId: Int!): Float!
-  deleteTask(categoryId: Float!, taskId: Float!): Float!
+  deleteTask(categoryId: Int!, taskId: Int!): Float!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   register(registerUserInput: RegisterUserInput!): RegisterResponse!
   updateCategory(updateCategory: UpdateCategoryInput!): CategoryEntity!
@@ -62,10 +62,10 @@ type Mutation {
 
 type Query {
   allCategories: [CategoryResponse!]!
-  allTasks(categoryId: Float!): [TaskEntity!]!
+  allTasks(categoryId: Int!): [TaskEntity!]!
   categoryById(categoryId: Int!): CategoryEntity!
   profile: UserEntity!
-  taskById(categoryId: Float!, taskId: Float!): TaskEntity!
+  taskById(categoryId: Int!, taskId: Int!): TaskEntity!
 }
 
 type RegisterResponse {

@@ -22,7 +22,7 @@ export const UPDATE_TASK =
 `);
 
 export const DELETE_TASK =
-  gql(`mutation DeleteTask($categoryId: Float!, $taskId: Float!) {
+  gql(`mutation DeleteTask($categoryId: Int!, $taskId: Int!) {
     deleteTask(categoryId: $categoryId, taskId: $taskId)
   }
 `);
