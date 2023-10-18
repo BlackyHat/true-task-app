@@ -82,7 +82,7 @@ JWT_SECRET=hide-me-secret
 
 Make sure you have Docker installed (Docker is not supported by the Windows family of operating systems except
 Windows-Professional or Enterprise, as it requires Hyper-V, as stated on the company website Microsoft)
-в [dicumentation](https://docs.microsoft.com/ru-ru/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v#check-requirements)
+в [documentation](https://docs.microsoft.com/ru-ru/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v#check-requirements)
 
 Execute the command:
 
@@ -91,6 +91,13 @@ docker-compose up
 # -d - to run in the background
 # --build - to rebuild the containers
 ```
+
+##
+
+![Login page ](assets/22.png) ![Add new category ](assets/33.png)
+![Tasks page ](assets/44.png) ![Categories page](assets/55.png)
+
+##
 
 ### Without Docker 🚀 📅 🤠 🔧
 
